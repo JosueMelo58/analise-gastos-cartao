@@ -4,6 +4,9 @@ Projeto de portfólio de **Análise de Dados** de ponta a ponta: parte de um ext
 
 > **Nota:** os dados são fictícios, gerados por script (seed fixa = reprodutível) para simular um extrato real — incluindo os problemas de qualidade típicos de dados do mundo real: duplicatas, nulos e formatos inconsistentes.
 
+## [Clique aqui para conferir o Dashboard Interativo](https://josuemelo58.github.io/analise-gastos-cartao/dashboard.html)
+
+
 ## 🚀 Comece por aqui
 
 | O que ver | Como |
