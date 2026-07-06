@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<title>Gastos de Cartão — Dashboard</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="assets/resource_3fa48481346f.js"></script>
+<script src="assets/lucide_latest_2eebd0ebe8c2.js"></script>
+<style>
+[style*="--border-gradient"]::before {
+  content:""; position:absolute; inset:0; padding:1px;
+  border-radius:var(--border-radius-before, inherit);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor; mask-composite:exclude;
+  background:var(--border-gradient); pointer-events:none;
+}
+select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23737373' stroke-width='3'><path d='m6 9 6 6 6-6'/></svg>");background-repeat:no-repeat;background-position:right 10px center;padding-right:26px}
+input[type=range]{-webkit-appearance:none;appearance:none;height:6px;border-radius:9999px;background:#262626;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:9999px;background:#06b6d4;border:2px solid #fff;cursor:pointer}
+input[type=checkbox]{accent-color:#06b6d4}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:#404040;border-radius:8px}::-webkit-scrollbar-track{background:transparent}
+.page{display:none}.page.active{display:block}
+</style>
+</head>
+<body class="min-h-screen bg-neutral-950 text-white antialiased">
+<!-- Background (design system) -->
+<div class="aura-background-component fixed top-0 w-full h-screen -z-10 saturate-50" data-alpha-mask="80" style="mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent)"><div class="aura-background-component top-0 w-full -z-10 absolute h-full">
+<div class="absolute w-full h-full left-0 top-0 -z-10" data-us-project="qpSlPSWA2bdkUAYztz8z"></div>
+<script type="text/javascript">
+    !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head || document.body).appendChild(i)}}();
+  </script>
+</div></div>
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+
+  <!-- Header -->
+  <div class="flex flex-wrap items-end justify-between gap-4 mt-2 mb-5">
+    <div>
+      <p class="text-xs font-medium uppercase tracking-[0.14em] text-neutral-400">Finanças pessoais · jan–jun 2026</p>
+      <h1 class="text-[26px] sm:text-[30px] font-semibold tracking-tight">Gastos de Cartão de Crédito</h1>
+    </div>
+    <span class="inline-flex items-center gap-1.5 rounded-full bg-neutral-800 px-3 py-1.5 text-[11px] text-neutral-200 border border-white/10">
+      <i data-lucide="database" class="h-3.5 w-3.5 text-emerald-400"></i>
+      <span id="badge-count">—</span>
+    </span>
+  </div>
+
+  <!-- Navegação -->
+  <div class="flex flex-wrap gap-2 mb-4" id="nav">
+    <button data-page="p1" class="nav-btn inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-medium transition border"><i data-lucide="layout-dashboard" class="h-3.5 w-3.5"></i>Visão Executiva</button>
+    <button data-page="p2" class="nav-btn inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-medium transition border"><i data-lucide="layout-grid" class="h-3.5 w-3.5"></i>Categorias &amp; Lojistas</button>
+    <button data-page="p3" class="nav-btn inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-medium transition border"><i data-lucide="activity" class="h-3.5 w-3.5"></i>Comportamento</button>
+    <button data-page="p4" class="nav-btn inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-medium transition border"><i data-lucide="target" class="h-3.5 w-3.5"></i>Planejamento</button>
+  </div>
+
+  <!-- Filtros globais -->
+  <div class="flex flex-wrap items-center gap-2 mb-6 relative z-40">
+    <span class="flex items-center gap-1.5 text-[11px] text-neutral-500 uppercase tracking-[0.14em] font-medium mr-1"><i data-lucide="filter" class="h-3.5 w-3.5"></i>Filtros</span>
+    <div class="flex items-center gap-1 rounded-full bg-neutral-800 border border-white/10 px-2 py-1">
+      <span class="text-[11px] text-neutral-400 pl-1">De</span>
+      <select id="f-m1" class="bg-neutral-800 text-xs text-neutral-100 rounded-full px-2 py-1 border-0 focus:outline-none"></select>
+      <span class="text-[11px] text-neutral-400">até</span>
+      <select id="f-m2" class="bg-neutral-800 text-xs text-neutral-100 rounded-full px-2 py-1 border-0 focus:outline-none"></select>
+    </div>
+    <div class="relative">
+      <button id="f-cat-btn" class="inline-flex items-center gap-1.5 rounded-full bg-neutral-800 px-3 py-1.5 text-xs text-neutral-100 border border-white/10 hover:bg-neutral-700 transition">
+        <i data-lucide="tags" class="h-3.5 w-3.5 text-neutral-400"></i><span id="f-cat-label">Categorias: Todas</span>
+        <i data-lucide="chevron-down" class="h-3 w-3 text-neutral-500"></i>
+      </button>
+      <div id="f-cat-panel" class="hidden absolute top-full left-0 mt-2 w-64 rounded-2xl bg-neutral-900 border border-white/15 shadow-xl shadow-black/60 p-3 z-50">
+        <div class="flex gap-2 mb-2">
+          <button id="f-cat-all" class="flex-1 rounded-full bg-neutral-800 px-2 py-1 text-[11px] text-neutral-200 border border-white/10 hover:bg-neutral-700">Todas</button>
+          <button id="f-cat-none" class="flex-1 rounded-full bg-neutral-800 px-2 py-1 text-[11px] text-neutral-200 border border-white/10 hover:bg-neutral-700">Nenhuma</button>
+        </div>
+        <div id="f-cat-list" class="max-h-56 overflow-y-auto flex flex-col gap-0.5 pr-1"></div>
+      </div>
+    </div>
+    <select id="f-titular" class="rounded-full bg-neutral-800 px-3 py-1.5 text-xs text-neutral-100 border border-white/10 focus:outline-none hover:bg-neutral-700 transition">
+      <option value="ALL">Titular: Todos</option>
+      <option value="TITULAR">Somente titular</option>
+      <option value="ADICIONAL">Somente adicional</option>
+    </select>
+    <select id="f-tipo" class="rounded-full bg-neutral-800 px-3 py-1.5 text-xs text-neutral-100 border border-white/10 focus:outline-none hover:bg-neutral-700 transition">
+      <option value="ALL">Pagamento: Todos</option>
+      <option value="credito_a_vista">À vista</option>
+      <option value="credito_parcelado">Parcelado</option>
+    </select>
+    <button id="f-est" class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs border transition"></button>
+    <button id="f-reset" class="inline-flex items-center gap-1.5 rounded-full bg-neutral-900 px-3 py-1.5 text-xs text-neutral-400 border border-white/10 hover:text-neutral-100 hover:bg-neutral-800 transition">
+      <i data-lucide="rotate-ccw" class="h-3.5 w-3.5"></i>Limpar
+    </button>
+  </div>
+
+  <!-- ============ PÁGINA 1: VISÃO EXECUTIVA ============ -->
+  <div id="p1" class="page">
+    <div class="grid grid-cols-1 md:grid-cols-8 lg:grid-cols-12 gap-4">
+
+      <section class="md:col-span-4 lg:col-span-3 bg-cyan-500 rounded-3xl p-5 flex flex-col justify-between shadow-lg shadow-cyan-900/40 border border-white/15 min-h-[150px]">
+        <div class="flex items-start justify-between">
+          <div class="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-white/15 border border-white/30"><i data-lucide="wallet" class="h-4 w-4 text-white"></i></div>
+          <span id="kpi1-badge" class="rounded-full bg-white/15 px-2.5 py-1 text-[11px] font-medium text-white/90 border border-white/30">—</span>
+        </div>
+        <div>
+          <p class="text-xs font-medium uppercase tracking-[0.14em] text-cyan-100/80">Gasto do mês</p>
+          <p id="kpi1-v" class="text-[24px] font-semibold tracking-tight">—</p>
+          <p id="kpi1-sub" class="text-xs text-cyan-100/80">—</p>
+        </div>
+      </section>
+
+      <section class="md:col-span-4 lg:col-span-3 flex flex-col justify-between p-5 bg-gradient-to-br from-white/10 to-white/0 rounded-3xl shadow-lg shadow-neutral-900/50 backdrop-blur-lg min-h-[150px]" style="position:relative; --border-gradient:linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0)); --border-radius-before:24px">
+        <div class="flex items-start justify-between">
+          <div class="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-amber-500 border border-amber-300/70"><i data-lucide="calendar-clock" class="h-4 w-4 text-white"></i></div>
+          <span class="rounded-full bg-neutral-800 px-2.5 py-1 text-[11px] text-neutral-200 border border-white/10">Contratado</span>
+        </div>
+        <div>
+          <p class="text-xs text-neutral-400 uppercase tracking-[0.14em] font-medium">Parcelas (média/mês)</p>
+          <p id="kpi2-v" class="text-[24px] font-semibold tracking-tight">—</p>
+          <p id="kpi2-sub" class="text-xs text-neutral-400">—</p>
+        </div>
+      </section>
+
+      <section class="md:col-span-4 lg:col-span-3 bg-emerald-600 rounded-3xl p-5 flex flex-col justify-between shadow-lg shadow-emerald-900/40 border border-white/15 min-h-[150px]">
+        <div class="flex items-start justify-between">
+          <div class="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-white/20 border border-white/40"><i data-lucide="repeat" class="h-4 w-4 text-white"></i></div>
+          <span class="rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.14em] text-white/90 border border-white/30">Fixo</span>
+        </div>
+        <div>
+          <p class="text-xs font-medium uppercase tracking-[0.14em] text-emerald-50/85">Assinaturas</p>
+          <p id="kpi3-v" class="text-[24px] font-semibold tracking-tight">—</p>
+          <p id="kpi3-sub" class="text-xs text-emerald-50/85">—</p>
+        </div>
+      </section>
+
+      <section class="md:col-span-4 lg:col-span-3 flex flex-col justify-between p-5 bg-gradient-to-br from-white/10 to-white/0 rounded-3xl shadow-lg shadow-neutral-900/50 backdrop-blur-lg min-h-[150px]" style="position:relative; --border-gradient:linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0)); --border-radius-before:24px">
+        <div class="flex items-start justify-between">
+          <div class="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-purple-500/80 border border-purple-300/70"><i data-lucide="receipt-text" class="h-4 w-4 text-white"></i></div>
+          <span id="kpi4-badge" class="rounded-full bg-neutral-800 px-2.5 py-1 text-[11px] text-neutral-200 border border-white/10">—</span>
+        </div>
+        <div>
+          <p class="text-xs text-neutral-400 uppercase tracking-[0.14em] font-medium">Ticket médio</p>
+          <p id="kpi4-v" class="text-[24px] font-semibold tracking-tight">—</p>
+          <p id="kpi4-sub" class="text-xs text-neutral-400">—</p>
+        </div>
+      </section>
+
+      <section class="md:col-span-8 lg:col-span-6 bg-yellow-400 rounded-3xl p-5 sm:p-6 flex flex-col shadow-lg shadow-yellow-900/40 border border-white/15 min-h-[300px]">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <p class="text-xs font-medium uppercase tracking-[0.14em] text-yellow-950/80">Evolução</p>
+            <h2 class="text-[22px] font-semibold tracking-tight text-yellow-950">Gasto Mensal</h2>
+          </div>
+          <span id="ev-total" class="inline-flex items-center gap-1 rounded-full bg-yellow-300/70 px-3 py-1 text-[11px] font-medium text-yellow-950 border border-yellow-600/40">—</span>
+        </div>
+        <div class="flex-1 flex flex-col gap-3">
+          <div id="ev-bars" class="flex gap-3 h-36 items-end"></div>
+          <div id="ev-labels" class="flex gap-3 text-center text-[11px] text-yellow-950/80"></div>
+          <div class="mt-1 pt-3 border-t border-yellow-900/20 flex items-center justify-between text-[11px] text-yellow-950/80">
+            <span>Média mensal: <span id="ev-media" class="font-semibold text-yellow-950">—</span></span>
+            <span>Variação (CV): <span id="ev-cv" class="font-semibold text-yellow-950">—</span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="md:col-span-8 lg:col-span-6 flex flex-col p-5 sm:p-6 bg-gradient-to-br from-white/10 to-white/0 rounded-3xl shadow-lg shadow-black/60 backdrop-blur-lg min-h-[300px]" style="position:relative; --border-gradient:linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0)); --border-radius-before:24px">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <p class="text-xs font-medium uppercase tracking-[0.14em] text-neutral-400">Concentração</p>
+            <h2 class="text-[22px] font-semibold tracking-tight">Para Onde Vai o Dinheiro</h2>
+          </div>
+          <span id="top3-badge" class="inline-flex items-center gap-1 rounded-full bg-neutral-800 px-2.5 py-1 text-[11px] text-neutral-200 border border-white/10">—</span>
+        </div>
+        <div id="treemap" class="flex-1 grid grid-cols-4 grid-rows-2 gap-2 min-h-[160px]"></div>
+        <div id="treemap-leg" class="mt-3 pt-3 border-t border-white/10 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-neutral-400"></div>
+      </section>
+
+      <section class="md:col-span-8 lg:col-span-5 flex flex-col p-5 sm:p-6 bg-gradient-to-br from-white/10 to-white/0 rounded-3xl shadow-lg shadow-black/60 backdrop-blur-lg min-h-[280px]" style="position:relative; --border-gradient:linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0)); --border-radius-before:24px">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <p class="text-xs font-medium uppercase tracking-[0.14em] text-neutral-400">Pareto</p>
+            <h2 class="text-[22px] font-semibold tracking-tight">Top Estabelecimentos</h2>
+          </div>
+          <span id="top10-badge" class="inline-flex items-center gap-1 rounded-full bg-neutral-800 px-2.5 py-1 text-[11px] text-neutral-200 border border-white/10">—</span>
+        </div>
+        <div id="pareto" class="flex-1 flex flex-col justify-center gap-3 text-xs"></div>
+        <p class="mt-3 pt-3 border-t border-white/10 text-[11px] text-neutral-400">Poucos lojistas concentram a maior parte do gasto — alvo prioritário de corte.</p>
+      </section>
+
+      <section class="md:col-span-4 lg:col-span-4 flex flex-col p-5 sm:p-6 bg-gradient-to-br from-white/10 to-white/0 rounded-3xl shadow-lg shadow-black/60 backdrop-blur-lg min-h-[280px]" style="position:relative; --border-gradient:linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0)); --border-radius-before:24px">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-red-500/80 border border-red-300/60"><i data-lucide="bell-ring" class="h-4 w-4 text-white"></i></div>
+          <div>
+            <p class="text-xs font-medium uppercase tracking-[0.14em] text-neutral-400">Regras automáticas</p>
+            <h2 class="text-[18px] font-semibold tracking-tight">Alertas</h2>
+          </div>
+        </div>
+        <div id="alertas" class="flex-1 flex flex-col gap-2.5 text-xs"></div>
+      </section>
+
+      <section class="md:col-span-4 lg:col-span-3 flex flex-col justify-between p-5 sm:p-6 bg-gradient-to-br from-white/10 to-white/0 rounded-3xl shadow-lg shadow-black/60 backdrop-blur-lg min-h-[280px]" style="position:relative; --border-gradient:linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0)); --border-radius-before:24px">
+        <div>
+          <p class="text-xs font-medium uppercase tracking-[0.14em] text-neutral-400 mb-3">Hábitos</p>
+          <div class="flex items-center justify-between py-2 border-b border-white/5">
+            <span class="flex items-center gap-2 text-xs text-neutral-300"><i data-lucide="moon" class="h-3.5 w-3.5 text-sky-400"></i>Após 18h</span>
+            <span id="h-noite" class="text-sm font-semibold">—</span>
+          </div>
+          <div class="flex items-center justify-between py-2 border-b border-white/5">
+            <span class="flex items-center gap-2 text-xs text-neutral-300"><i data-lucide="sun" class="h-3.5 w-3.5 text-amber-400"></i>Fim de semana</span>
+            <span id="h-fds" class="text-sm font-semibold">—</span>
+          </div>
+          <div class="flex items-center justify-between py-2">
+            <span class="flex items-center gap-2 text-xs text-neutral-300"><i data-lucide="clock" class="h-3.5 w-3.5 text-emerald-400"></i>Pico de uso</span>
+            <span id="h-pico" class="text-sm font-semibold">—</span>
+          </div>
+        </div>
+        <div class="mt-4 pt-4 border-t border-white/10 flex flex-col gap-2">
+          <p class="text-[11px] text-neutral-500 uppercase tracking-[0.14em] font-medium">Explorar</p>
+          <button data-goto="p2" class="goto w-full inline-flex items-center justify-between rounded-full bg-neutral-800 px-3 py-2 text-xs font-medium text-neutral-100 hover:bg-neutral-700 transition border border-white/10"><span class="flex items-center gap-2"><i data-lucide="layout-grid" class="h-3.5 w-3.5 text-cyan-400"></i>Categorias &amp; Lojistas</span><i data-lucide="arrow-right" class="h-3.5 w-3.5 text-neutral-500"></i></button>
+          <button data-goto="p3" class="goto w-full inline-flex items-center justify-between rounded-full bg-neutral-800 px-3 py-2 text-xs font-medium text-neutral-100 hover:bg-neutral-700 transition border border-white/10"><span class="flex items-center gap-2"><i data-lucide="activity" class="h-3.5 w-3.5 text-emerald-400"></i>Comportamento</span><i data-lucide="arrow-right" class="h-3.5 w-3.5 text-neutral-500"></i></button>
+          <button data-goto="p4" class="goto w-full inline-flex items-center justify-between rounded-full bg-neutral-800 px-3 py-2 text-xs font-medium text-neutral-100 hover:bg-neutral-700 transition border border-white/10"><span class="flex items-center gap-2"><i data-lucide="target" class="h-3.5 w-3.5 text-purple-400"></i>Planejamento</span><i data-lucide="arrow-right" class="h-3.5 w-3.5 text-neutral-500"></i></button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ============ PÁGINA 2: CATEGORIAS & LOJISTAS ============ -->
+  <div id="p2" class="page">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+      <section class="lg:col-span-5 flex flex-col p-5 sm:p-6 bg-gradient-to-br from-white/10 to-white/0 rounded-3xl shadow-lg shadow-black/60 backdrop-blur-lg" style="position:relative; --border-gradient:linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0)); --border-radius-before:24px">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <p class="text-xs font-medium uppercase tracking-[0.14em] text-neutral-400">Ranking completo</p>
+            <h2 class="text-[22px] font-semibold tracking-tight">Gasto por Categoria</h2>
+          </div>
+          <span class="text-[10px] text-neutral-500">clique para filtrar</span>
+        </div>
+        <div id="cat-bars" class="flex-1 flex flex-col gap-2 text-xs max-h-[430px] overflow-y-auto pr-1"></div>
+      </section>
+
+      <div class="lg:col-span-7 flex flex-col gap-4">
+        <section class="flex flex-col p-5 sm:p-6 bg-gradient-to-br from-white/10 to-white/0 rounded-3xl shadow-lg shadow-black/60 backdrop-blur-lg" style="position:relative; --border-gradient:linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0)); --border-radius-before:24px">
+          <div class="flex items-center justify-between mb-2">
+            <div>
+              <p class="text-xs font-medium uppercase tracking-[0.14em] text-neutral-400">Tendência</p>
+              <h2 class="text-[20px] font-semibold tracking-tight">Evolução Mensal — Top 5 Categorias</h2>
+            </div>
+          </div>
+          <div id="cat-lines-leg" class="flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-neutral-400 mb-2"></div>
+          <svg id="cat-lines" viewBox="0 0 640 240" class="w-full"></svg>
+        </section>
+
+        <section class="flex flex-col p-5 sm:p-6 bg-gradient-to-br from-white/10 to-white/0 rounded-3xl shadow-lg shadow-black/60 backdrop-blur-lg" style="position:relative; --border-gradient:linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0)); --border-radius-before:24px">
+          <div class="mb-2">
+            <p class="text-xs font-medium uppercase tracking-[0.14em] text-neutral-400">Perfil de consumo</p>
+            <h2 class="text-[20px] font-semibold tracking-tight">Ticket Médio × Frequência</h2>
+            <p class="text-[11px] text-neutral-500 mt-1">Alto ticket + baixa frequência (topo) pede planejamento; baixo ticket + alta frequência (direita) pede mudança de hábito.</p>
+          </div>
+          <svg id="cat-scatter" viewBox="0 0 640 260" class="w-full"></svg>
+        </section>
+      </div>
+
+      <section class="lg:col-span-12 flex flex-col p-5 sm:p-6 bg-gradient-to-br from-white/10 to-white/0 rounded-3xl shadow-lg shadow-black/60 backdrop-blur-lg" style="position:relative; --border-gradient:linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0)); --border-radius-before:24px">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <div>
+            <p class="text-xs font-medium uppercase tracking-[0.14em] text-neutral-400">Nível transação</p>
+            <h2 class="text-[20px] font-semibold tracking-tight">Transações</h2>
+          </div>
+          <div class="flex items-center gap-2 rounded-full bg-neutral-800 border border-white/10 px-3 py-1.5">
+            <i data-lucide="search" class="h-3.5 w-3.5 text-neutral-500"></i>
+            <input id="tx-search" type="text" placeholder="Buscar estabelecimento ou categoria…" class="bg-transparent text-xs text-neutral-100 placeholder-neutral-500 focus:outline-none w-56"/>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs">
+            <thead>
+              <tr class="text-left text-neutral-500 border-b border-white/10">
+                <th class="py-2 pr-3 cursor-pointer hover:text-neutral-200 select-none" data-sort="d">Data ↕</th>
+                <th class="py-2 pr-3">Estabelecimento</th>
+                <th class="py-2 pr-3">Categoria</th>
+                <th class="py-2 pr-3 cursor-pointer hover:text-neutral-200 select-none text-right" data-sort="v">Valor ↕</th>
+                <th class="py-2 pr-3">Pagamento</th>
+                <th class="py-2">Titular</th>
+              </tr>
+            </thead>
+            <tbody id="tx-table"></tbody>
+          </table>
+        </div>
+        <div class="mt-3 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-neutral-400">
+          <span id="tx-info">—</span>
+          <div class="flex gap-2">
+            <button id="tx-prev" class="rounded-full bg-neutral-800 px-3 py-1 border border-white/10 hover:bg-neutral-700 transition">← Anterior</button>
+            <button id="tx-next" class="rounded-full bg-neutral-800 px-3 py-1 border border-white/10 hover:bg-neutral-700 transition">Próxima →</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ============ PÁGINA 3: COMPORTAMENTO ============ -->
+  <div id="p3" class="page">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+      <section class="lg:col-span-8 flex flex-col p-5 sm:p-6 bg-gradient-to-br from-white/10 to-white/0 rounded-3xl shadow-lg shadow-black/60 backdrop-blur-lg" style="position:relative; --border-gradient:linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0)); --border-radius-before:24px">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <p class="text-xs font-medium uppercase tracking-[0.14em] text-neutral-400">Quando o cartão é usado</p>
+            <h2 class="text-[22px] font-semibold tracking-tight">Dia da Semana × Hora</h2>
+          </div>
+          <span class="text-[10px] text-neutral-500">nº de transações</span>
+        </div>
+        <div id="heatmap" class="flex-1"></div>
+      </section>
+
+      <section class="lg:col-span-4 flex flex-col gap-4">
+        <div class="flex flex-col p-5 bg-gradient-to-br from-white/10 to-white/0 rounded-3xl shadow-lg shadow-black/60 backdrop-blur-lg" style="position:relative; --border-gradient:linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0)); --border-radius-before:24px">
+          <p class="text-xs font-medium uppercase tracking-[0.14em] text-neutral-400 mb-3">Período do dia (R$)</p>
+          <div id="periodos" class="flex flex-col gap-2.5 text-xs"></div>
+        </div>
+        <div class="flex flex-col p-5 bg-gradient-to-br from-white/10 to-white/0 rounded-3xl shadow-lg shadow-black/60 backdrop-blur-lg" style="position:relative; --border-gradient:linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0)); --border-radius-before:24px">
+          <p class="text-xs font-medium uppercase tracking-[0.14em] text-neutral-400 mb-3">Semana vs Fim de Semana</p>
+          <div id="fds" class="flex flex-col gap-2.5 text-xs"></div>
+        </div>
+      </section>
+
+      <section class="lg:col-span-6 flex flex-col p-5 sm:p-6 bg-gradient-to-br from-white/10 to-white/0 rounded-3xl shadow-lg shadow-black/60 backdrop-blur-lg" style="position:relative; --border-gradient:linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0)); --border-radius-before:24px">
+        <div class="mb-3">
+          <p class="text-xs font-medium uppercase tracking-[0.14em] text-neutral-400">Distribuição de valores</p>
+          <h2 class="text-[20px] font-semibold tracking-tight">Rotina vs. Compras Grandes</h2>
+        </div>
+        <div id="hist" class="flex-1 flex gap-2 items-end h-44"></div>
+        <div id="hist-labels" class="flex gap-2 text-center text-[10px] text-neutral-500 mt-2"></div>
+        <p id="hist-note" class="mt-3 pt-3 border-t border-white/10 text-[11px] text-neutral-400">—</p>
+      </section>
+
+      <section class="lg:col-span-6 flex flex-col p-5 sm:p-6 bg-gradient-to-br from-white/10 to-white/0 rounded-3xl shadow-lg shadow-black/60 backdrop-blur-lg" style="position:relative; --border-gradient:linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0)); --border-radius-before:24px">
+        <div class="mb-3">
+          <p class="text-xs font-medium uppercase tracking-[0.14em] text-neutral-400">Outliers</p>
+          <h2 class="text-[20px] font-semibold tracking-tight">Maiores Compras do Período</h2>
+        </div>
+        <div id="top-compras" class="flex-1 flex flex-col gap-2 text-xs"></div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ============ PÁGINA 4: PLANEJAMENTO ============ -->
+  <div id="p4" class="page">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+      <section class="lg:col-span-7 bg-yellow-400 rounded-3xl p-5 sm:p-6 flex flex-col shadow-lg shadow-yellow-900/40 border border-white/15 min-h-[280px]">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <p class="text-xs font-medium uppercase tracking-[0.14em] text-yellow-950/80">Compromisso futuro</p>
+            <h2 class="text-[22px] font-semibold tracking-tight text-yellow-950">Parcelas Já Contratadas (Jul–Dez)</h2>
+          </div>
+          <span id="proj-total" class="inline-flex items-center gap-1 rounded-full bg-yellow-300/70 px-3 py-1 text-[11px] font-medium text-yellow-950 border border-yellow-600/40">—</span>
+        </div>
+        <div class="flex-1 flex flex-col gap-3">
+          <div id="proj-bars" class="flex gap-3 h-32 items-end"></div>
+          <div id="proj-labels" class="flex gap-3 text-center text-[11px] text-yellow-950/80"></div>
+        </div>
+        <p id="proj-note" class="mt-3 pt-3 border-t border-yellow-900/20 text-[11px] text-yellow-950/80">—</p>
+      </section>
+
+      <section class="lg:col-span-5 flex flex-col p-5 sm:p-6 bg-gradient-to-br from-white/10 to-white/0 rounded-3xl shadow-lg shadow-black/60 backdrop-blur-lg" style="position:relative; --border-gradient:linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0)); --border-radius-before:24px">
+        <div class="flex items-center justify-between mb-3">
+          <div>
+            <p class="text-xs font-medium uppercase tracking-[0.14em] text-neutral-400">Gasto invisível</p>
+            <h2 class="text-[20px] font-semibold tracking-tight">Assinaturas</h2>
+          </div>
+          <span id="assin-total" class="inline-flex items-center gap-1 rounded-full bg-neutral-800 px-2.5 py-1 text-[11px] text-neutral-200 border border-white/10">—</span>
+        </div>
+        <p class="text-[11px] text-neutral-500 mb-3">Marque um serviço para simular o cancelamento (entra na economia abaixo).</p>
+        <div id="assin-list" class="flex-1 flex flex-col gap-1.5 text-xs"></div>
+      </section>
+
+      <section class="lg:col-span-7 flex flex-col p-5 sm:p-6 bg-gradient-to-br from-white/10 to-white/0 rounded-3xl shadow-lg shadow-black/60 backdrop-blur-lg" style="position:relative; --border-gradient:linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0)); --border-radius-before:24px">
+        <div class="mb-4">
+          <p class="text-xs font-medium uppercase tracking-[0.14em] text-neutral-400">E se…?</p>
+          <h2 class="text-[20px] font-semibold tracking-tight">Simulador de Economia</h2>
+        </div>
+        <div class="flex flex-col gap-5">
+          <div>
+            <div class="flex justify-between text-xs mb-1.5"><span class="text-neutral-300">Reduzir alimentação fora de casa</span><span id="sim-fora-v" class="font-semibold text-cyan-300">0%</span></div>
+            <input id="sim-fora" type="range" min="0" max="100" value="0" step="5" class="w-full"/>
+            <p id="sim-fora-base" class="text-[10px] text-neutral-500 mt-1">—</p>
+          </div>
+          <div>
+            <div class="flex justify-between text-xs mb-1.5"><span class="text-neutral-300">Reduzir e-commerce</span><span id="sim-ecom-v" class="font-semibold text-cyan-300">0%</span></div>
+            <input id="sim-ecom" type="range" min="0" max="100" value="0" step="5" class="w-full"/>
+            <p id="sim-ecom-base" class="text-[10px] text-neutral-500 mt-1">—</p>
+          </div>
+          <div>
+            <div class="flex justify-between text-xs mb-1.5"><span class="text-neutral-300">Reduzir vestuário</span><span id="sim-vest-v" class="font-semibold text-cyan-300">0%</span></div>
+            <input id="sim-vest" type="range" min="0" max="100" value="0" step="5" class="w-full"/>
+            <p id="sim-vest-base" class="text-[10px] text-neutral-500 mt-1">—</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="lg:col-span-5 bg-emerald-600 rounded-3xl p-5 sm:p-6 flex flex-col justify-between shadow-lg shadow-emerald-900/40 border border-white/15">
+        <div>
+          <p class="text-xs font-medium uppercase tracking-[0.14em] text-emerald-50/85">Resultado da simulação</p>
+          <p id="sim-eco" class="text-[34px] font-semibold tracking-tight mt-1">R$ 0</p>
+          <p id="sim-eco-sub" class="text-xs text-emerald-50/85">de economia por mês</p>
+        </div>
+        <div class="mt-5">
+          <div class="flex justify-between text-[11px] text-emerald-50/85 mb-1.5">
+            <span>Progresso vs. meta de 15%</span><span id="sim-meta-pct">0%</span>
+          </div>
+          <div class="h-3 rounded-full bg-emerald-900/40 overflow-hidden">
+            <div id="sim-bar" class="h-3 rounded-full bg-white transition-all" style="width:0%"></div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-white/20 flex items-center justify-between text-[11px] text-emerald-50/85">
+            <span>Gasto médio: <span id="meta-media" class="font-semibold text-white">—</span>/mês</span>
+            <span>Meta (15%): <span id="meta-valor" class="font-semibold text-white">—</span>/mês</span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <p class="mt-6 text-center text-[11px] text-neutral-600">Projeto de portfólio · dados fictícios · pipeline de limpeza e cálculos documentados em <span class="text-neutral-400">analise_gastos_cartao.ipynb</span> (seção 8)</p>
+</div>
+
+<script>
+/* ============ DADOS (gerados pelo notebook — seção 8.7) ============ */
+const RAW = [["TX1099","2026-01-01T16:59","DROGARIA SAO PAULO","Farmacia",106.15,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1412","2026-01-01T17:01","STARBUCKS BR","Cafeteria",28.89,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1251","2026-01-02T09:55","99APP *99APP","Transporte",32.22,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1441","2026-01-02T14:08","CARREFOUR HIPER","Supermercado",350.12,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1383","2026-01-02T21:59","IFOOD *RESTAURANTE","Delivery",53.48,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1086","2026-01-03T09:04","MAGAZINE LUIZA","E-Commerce",646.64,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1388","2026-01-03T12:36","SUPERMERCADO PAO DE ACUCAR","Supermercado",119.7,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1442","2026-01-03T13:32","IFOOD *RESTAURANTE","Delivery",51.12,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1077","2026-01-03T15:39","MERCADO DIA%","Supermercado",119.63,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1467","2026-01-04T12:26","POSTO SHELL","Combustivel",240.25,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1155","2026-01-04T17:18","HORTIFRUTI NATURAL DA TERRA","Supermercado",68.3,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1001","2026-01-05T00:47","SPOTIFY","Streaming",21.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1004","2026-01-05T05:06","SMARTFIT","Academia",119.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1147","2026-01-05T09:18","DROGASIL","Farmacia",69.59,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1435","2026-01-05T19:35","IFOOD *RESTAURANTE","Delivery",65.88,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1445","2026-01-05T22:52","UBER *TRIP","Transporte",43.7,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1058","2026-01-06T23:35","99APP *99APP","Transporte",33.13,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1367","2026-01-07T17:30","CINEMARK","Lazer",88.02,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1005","2026-01-08T05:47","ALURA CURSOS","Educacao",75.0,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1250","2026-01-08T08:17","PADARIA BELLA MASSA","Padaria",44.31,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1324","2026-01-08T12:54","IFOOD *RESTAURANTE","Delivery",72.47,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1346","2026-01-08T15:56","CINEMARK","Lazer",62.73,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1460","2026-01-08T17:50","UBER *TRIP","Transporte",34.53,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1326","2026-01-09T17:09","RENNER","Vestuario",190.48,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1000","2026-01-10T05:07","NETFLIX.COM","Streaming",44.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1314","2026-01-10T12:12","DROGASIL","Farmacia",121.8,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1175","2026-01-10T15:05","SHOPEE *SHOPEE","E-Commerce",61.69,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1195","2026-01-10T17:04","SHOPEE *SHOPEE","E-Commerce",131.76,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1362","2026-01-11T08:02","MERCADOLIVRE*MERCADOPAGO","E-Commerce",328.28,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1088","2026-01-11T18:13","99APP *99APP","Transporte",19.23,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1322","2026-01-11T19:55","DROGASIL","Farmacia",62.6,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1169","2026-01-11T22:27","LEROY MERLIN","Casa E Construcao",191.66,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1312","2026-01-12T19:34","IFOOD *RESTAURANTE","Delivery",81.95,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1232","2026-01-14T08:47","PADARIA BELLA MASSA","Padaria",33.67,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1475","2026-01-14T15:20","MAGAZINE LUIZA","E-Commerce",399.98,"Sao Paulo","BR","credito_parcelado",6,1,"TITULAR",false],["TX1427","2026-01-14T19:24","OUTBACK STEAKHOUSE","Restaurante",240.99,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1002","2026-01-15T02:15","AMAZON PRIME","Streaming",19.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1041","2026-01-15T12:52","UBER *TRIP","Transporte",50.25,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1059","2026-01-16T11:04","CINEMARK","Lazer",31.88,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1225","2026-01-16T18:17","99APP *99APP","Transporte",48.7,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1071","2026-01-16T19:20","SHOPEE *SHOPEE","E-Commerce",24.28,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1385","2026-01-16T22:49","INGRESSO.COM","Lazer",90.45,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1325","2026-01-18T13:49","IFOOD *RESTAURANTE","Delivery",50.64,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1184","2026-01-18T19:49","IFOOD *RESTAURANTE","Delivery",84.81,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1408","2026-01-18T22:30","CARREFOUR HIPER","Supermercado",192.06,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1039","2026-01-19T17:40","INGRESSO.COM","Lazer",80.4,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1164","2026-01-19T18:14","DROGASIL","Farmacia",50.71,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1003","2026-01-20T01:08","GOOGLE *YOUTUBEPREMIUM","Streaming",28.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1327","2026-01-20T17:08","DROGARIA SAO PAULO","Farmacia",78.71,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1262","2026-01-20T21:20","DROGASIL","Farmacia",72.95,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1303","2026-01-21T08:16","SUPERMERCADO PAO DE ACUCAR","Supermercado",388.94,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1037","2026-01-21T12:55","UBER *TRIP","Transporte",29.01,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1401","2026-01-21T16:28","CENTAURO","Vestuario",308.17,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1158","2026-01-22T12:07","UBER *TRIP","Transporte",48.22,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1485","2026-01-22T18:34","CASAS BAHIA","E-Commerce",189.9,"Sao Paulo","BR","credito_parcelado",10,1,"TITULAR",false],["TX1196","2026-01-24T09:06","STARBUCKS BR","Cafeteria",34.01,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1173","2026-01-24T15:22","AMAZON BR","E-Commerce",223.32,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1226","2026-01-24T18:13","DROGASIL","Farmacia",101.33,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1062","2026-01-25T18:27","HORTIFRUTI NATURAL DA TERRA","Supermercado",63.89,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1209","2026-01-25T22:40","PETZ","Pet",47.1,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1066","2026-01-26T08:41","SHOPEE *SHOPEE","E-Commerce",169.67,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1288","2026-01-26T22:49","UBER *TRIP","Transporte",51.76,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1136","2026-01-27T16:49","PADARIA BELLA MASSA","Padaria",48.26,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1081","2026-01-27T22:08","UDEMY","Educacao",35.06,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1247","2026-01-28T08:54","STARBUCKS BR","Cafeteria",26.03,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1446","2026-01-28T12:33","RAPPI*RAPPI BRASIL","Delivery",34.46,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1357","2026-01-28T14:08","SUPERMERCADO PAO DE ACUCAR","Supermercado",177.85,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1097","2026-01-28T17:27","SUPERMERCADO PAO DE ACUCAR","Supermercado",349.56,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1134","2026-01-28T23:01","UBER *TRIP","Transporte",25.6,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1402","2026-01-29T08:53","RENNER","Vestuario",321.84,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1132","2026-01-30T17:13","LIVRARIA CULTURA","Educacao",115.44,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1096","2026-01-30T22:16","SUPERMERCADO PAO DE ACUCAR","Supermercado",294.82,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1411","2026-01-31T09:34","99APP *99APP","Transporte",30.68,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1329","2026-01-31T12:49","MAGAZINE LUIZA","E-Commerce",657.31,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1179","2026-02-01T08:40","AMAZON BR","E-Commerce",486.61,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1113","2026-02-01T09:08","PADARIA BELLA MASSA","Padaria",30.91,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1297","2026-02-01T12:05","MERCADOLIVRE*MERCADOPAGO","E-Commerce",93.13,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1337","2026-02-02T13:41","MERCADO DIA%","Supermercado",67.75,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1342","2026-02-02T17:39","UBER *TRIP","Transporte",14.67,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1338","2026-02-02T22:40","99APP *99APP","Transporte",16.46,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1481","2026-02-03T13:52","DECOLAR.COM","Viagem",810.0,"Sao Paulo","BR","credito_parcelado",4,1,"TITULAR",false],["TX1405","2026-02-03T16:26","DROGASIL","Farmacia",91.13,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1260","2026-02-03T20:34","RAPPI*RAPPI BRASIL","Delivery",33.81,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1010","2026-02-05T01:32","SMARTFIT","Academia",119.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1007","2026-02-05T04:27","SPOTIFY","Streaming",21.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1334","2026-02-05T13:50","MC DONALDS","Restaurante",26.18,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1214","2026-02-06T20:14","MERCADO DIA%","Supermercado",89.25,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1237","2026-02-07T09:08","TOK STOK","Casa E Decoracao",303.48,"Nao Informado","BR","credito_a_vista",1,null,"TITULAR",false],["TX1268","2026-02-07T11:06","INGRESSO.COM","Lazer",56.76,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1298","2026-02-07T21:27","MERCADOLIVRE*MERCADOPAGO","E-Commerce",427.23,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1011","2026-02-08T04:01","ALURA CURSOS","Educacao",75.0,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1403","2026-02-08T10:20","SHOPEE *SHOPEE","E-Commerce",111.26,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1190","2026-02-08T15:02","DECOLAR.COM","Viagem",1053.44,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1166","2026-02-08T22:17","INGRESSO.COM","Lazer",47.09,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1070","2026-02-09T11:18","AMAZON BR","E-Commerce",582.32,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1082","2026-02-09T12:18","MAGAZINE LUIZA","E-Commerce",252.72,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1436","2026-02-09T12:21","UBER *TRIP","Transporte",28.99,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1046","2026-02-09T12:50","IFOOD *RESTAURANTE","Delivery",54.55,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1399","2026-02-09T15:47","AMAZON BR","E-Commerce",246.1,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1242","2026-02-09T18:59","POSTO SHELL","Combustivel",112.08,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1222","2026-02-09T22:26","C&A MODAS","Vestuario",72.77,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1006","2026-02-10T04:05","NETFLIX.COM","Streaming",44.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1072","2026-02-10T08:32","SHOPEE *SHOPEE","E-Commerce",172.5,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1333","2026-02-10T09:50","UBER *TRIP","Transporte",35.44,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1290","2026-02-11T12:53","IFOOD *RESTAURANTE","Delivery",78.98,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1038","2026-02-11T18:22","99APP *99APP","Transporte",36.48,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1295","2026-02-11T21:12","DROGARIA SAO PAULO","Farmacia",116.75,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1340","2026-02-12T09:20","UBER *TRIP","Transporte",45.47,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1067","2026-02-12T09:31","STARBUCKS BR","Cafeteria",21.41,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1068","2026-02-12T14:00","CARREFOUR HIPER","Supermercado",181.99,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1197","2026-02-12T19:19","DROGARIA SAO PAULO","Farmacia",24.63,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1125","2026-02-12T21:29","ESTACIONAMENTO ESTAPAR","Estacionamento",16.21,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1476","2026-02-13T13:47","MAGAZINE LUIZA","E-Commerce",399.98,"Sao Paulo","BR","credito_parcelado",6,2,"TITULAR",false],["TX1503","2026-02-14T08:32","ESTORNO SHOPEE *SHOPEE","E-Commerce",-172.5,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1211","2026-02-14T11:08","APPLE.COM/BILL","Servicos Digitais",36.87,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1386","2026-02-14T14:56","SUPERMERCADO PAO DE ACUCAR","Supermercado",145.04,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1008","2026-02-15T00:01","AMAZON PRIME","Streaming",19.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1090","2026-02-15T20:01","IFOOD *RESTAURANTE","Delivery",76.56,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1414","2026-02-18T08:02","UBER *TRIP","Transporte",43.01,"Nao Informado","BR","credito_a_vista",1,null,"TITULAR",false],["TX1316","2026-02-18T12:22","INGRESSO.COM","Lazer",101.37,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1430","2026-02-18T12:47","MC DONALDS","Restaurante",46.55,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1177","2026-02-18T16:23","CARREFOUR HIPER","Supermercado",407.96,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1428","2026-02-18T20:48","MERCADO DIA%","Supermercado",93.81,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1151","2026-02-19T13:47","RAPPI*RAPPI BRASIL","Delivery",36.59,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1094","2026-02-19T14:21","BOOKING.COM","Viagem",805.05,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1150","2026-02-19T19:07","IFOOD *RESTAURANTE","Delivery",62.51,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1110","2026-02-19T19:44","RENNER","Vestuario",203.37,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1009","2026-02-20T00:13","GOOGLE *YOUTUBEPREMIUM","Streaming",28.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1100","2026-02-20T13:27","LIVRARIA CULTURA","Educacao",144.12,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1486","2026-02-21T11:43","CASAS BAHIA","E-Commerce",189.9,"Sao Paulo","BR","credito_parcelado",10,2,"TITULAR",false],["TX1131","2026-02-21T17:01","PADARIA BELLA MASSA","Padaria",16.86,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1178","2026-02-22T12:35","CARREFOUR HIPER","Supermercado",486.73,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1434","2026-02-22T18:20","UBER *TRIP","Transporte",12.29,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1228","2026-02-23T17:13","MAGAZINE LUIZA","E-Commerce",793.15,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1161","2026-02-23T18:13","HORTIFRUTI NATURAL DA TERRA","Supermercado",82.83,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1429","2026-02-23T21:58","AMAZON BR","E-Commerce",206.3,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1042","2026-02-24T22:36","CARREFOUR HIPER","Supermercado",390.24,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1112","2026-02-26T10:51","DROGARIA SAO PAULO","Farmacia",102.87,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1124","2026-02-26T12:27","AMAZON BR","E-Commerce",51.4,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1248","2026-02-27T20:27","RENNER","Vestuario",222.68,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1159","2026-02-27T20:33","PETZ","Pet",121.09,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1170","2026-02-28T18:53","MERCADO DIA%","Supermercado",79.64,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1207","2026-02-28T23:51","UBER *TRIP","Transporte",20.95,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1382","2026-03-01T08:06","CINEMARK","Lazer",49.82,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1418","2026-03-01T23:20","UBER *TRIP","Transporte",39.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1060","2026-03-02T12:42","MERCADOLIVRE*MERCADOPAGO","E-Commerce",116.05,"Nao Informado","BR","credito_a_vista",1,null,"TITULAR",false],["TX1419","2026-03-02T17:56","UBER *TRIP","Transporte",59.28,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1415","2026-03-03T11:04","SUPERMERCADO PAO DE ACUCAR","Supermercado",299.76,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1305","2026-03-03T14:40","CARREFOUR HIPER","Supermercado",346.49,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1265","2026-03-04T14:37","HORTIFRUTI NATURAL DA TERRA","Supermercado",71.92,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1468","2026-03-04T17:33","MAGAZINE LUIZA","E-Commerce",641.96,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1016","2026-03-05T03:37","SMARTFIT","Academia",119.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1013","2026-03-05T05:41","SPOTIFY","Streaming",21.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1328","2026-03-05T08:01","UBER *TRIP","Transporte",19.3,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1064","2026-03-05T11:12","HORTIFRUTI NATURAL DA TERRA","Supermercado",65.89,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1482","2026-03-05T21:25","DECOLAR.COM","Viagem",810.0,"Sao Paulo","BR","credito_parcelado",4,2,"TITULAR",false],["TX1230","2026-03-06T20:11","SHOPEE *SHOPEE","E-Commerce",137.3,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1156","2026-03-06T21:30","CARREFOUR HIPER","Supermercado",438.17,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1259","2026-03-07T19:20","IFOOD *RESTAURANTE","Delivery",25.54,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1017","2026-03-08T02:51","ALURA CURSOS","Educacao",75.0,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1491","2026-03-08T21:18","TOK STOK","Casa E Decoracao",483.33,"Sao Paulo","BR","credito_parcelado",3,1,"TITULAR",false],["TX1076","2026-03-09T09:08","STARBUCKS BR","Cafeteria",34.37,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1083","2026-03-09T16:31","CINEMARK","Lazer",84.32,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1012","2026-03-10T04:12","NETFLIX.COM","Streaming",44.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1395","2026-03-10T13:19","DROGASIL","Farmacia",112.59,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1171","2026-03-10T17:02","LIVRARIA CULTURA","Educacao",121.97,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1319","2026-03-10T20:05","MERCADOLIVRE*MERCADOPAGO","E-Commerce",205.41,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1185","2026-03-10T21:00","MERCADOLIVRE*MERCADOPAGO","E-Commerce",333.57,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1118","2026-03-11T08:20","STARBUCKS BR","Cafeteria",31.2,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1317","2026-03-11T08:51","UBER *TRIP","Transporte",31.85,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1377","2026-03-12T12:07","MAGAZINE LUIZA","E-Commerce",634.83,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1223","2026-03-13T08:44","APPLE.COM/BILL","Servicos Digitais",20.76,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1142","2026-03-13T22:28","MERCADO DIA%","Supermercado",96.3,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1341","2026-03-14T21:05","MERCADOLIVRE*MERCADOPAGO","E-Commerce",108.43,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1257","2026-03-14T22:31","IFOOD *RESTAURANTE","Delivery",71.7,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1014","2026-03-15T05:34","AMAZON PRIME","Streaming",19.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1359","2026-03-15T09:24","MAGAZINE LUIZA","E-Commerce",449.29,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1376","2026-03-15T12:44","UBER *TRIP","Transporte",34.45,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1069","2026-03-15T14:44","DROGASIL","Farmacia",149.38,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1202","2026-03-15T18:34","CLINICA ODONTO SORRIA","Saude",168.47,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1330","2026-03-15T19:58","TOK STOK","Casa E Decoracao",138.07,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1477","2026-03-15T20:40","MAGAZINE LUIZA","E-Commerce",399.98,"Sao Paulo","BR","credito_parcelado",6,3,"TITULAR",false],["TX1163","2026-03-16T08:14","AMAZON BR","E-Commerce",434.43,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1307","2026-03-16T20:00","IFOOD *RESTAURANTE","Delivery",49.7,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1198","2026-03-17T13:23","CARREFOUR HIPER","Supermercado",126.96,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1213","2026-03-17T19:55","AMAZON BR","E-Commerce",489.39,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1462","2026-03-17T20:15","PETZ","Pet",53.23,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1456","2026-03-18T10:36","MERCADO DIA%","Supermercado",78.84,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1420","2026-03-18T12:03","APPLE.COM/BILL","Servicos Digitais",57.33,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1470","2026-03-18T15:50","DROGARIA SAO PAULO","Farmacia",77.78,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1424","2026-03-18T17:45","STARBUCKS BR","Cafeteria",39.17,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1203","2026-03-18T18:27","C&A MODAS","Vestuario",107.52,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1474","2026-03-18T19:38","IFOOD *RESTAURANTE","Delivery",39.06,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1423","2026-03-18T20:11","IFOOD *RESTAURANTE","Delivery",62.65,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1469","2026-03-19T08:31","PADARIA BELLA MASSA","Padaria",12.85,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1153","2026-03-19T11:45","RAPPI*RAPPI BRASIL","Delivery",27.59,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1220","2026-03-19T15:07","SUPERMERCADO PAO DE ACUCAR","Supermercado",166.88,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1015","2026-03-20T03:14","GOOGLE *YOUTUBEPREMIUM","Streaming",28.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1053","2026-03-20T12:03","99APP *99APP","Transporte",45.0,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1464","2026-03-20T15:23","SUPERMERCADO PAO DE ACUCAR","Supermercado",179.81,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1406","2026-03-20T19:01","LIVRARIA CULTURA","Educacao",64.26,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1108","2026-03-21T11:51","LIVRARIA CULTURA","Educacao",51.95,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1273","2026-03-21T15:28","MERCADO DIA%","Supermercado",30.4,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1284","2026-03-21T16:24","MERCADO DIA%","Supermercado",100.21,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1293","2026-03-21T17:50","STARBUCKS BR","Cafeteria",42.12,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1315","2026-03-21T22:25","UBER *TRIP","Transporte",37.15,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1101","2026-03-22T18:54","PETZ","Pet",169.56,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1364","2026-03-23T10:25","TOK STOK","Casa E Decoracao",348.33,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1487","2026-03-23T21:35","CASAS BAHIA","E-Commerce",189.9,"Sao Paulo","BR","credito_parcelado",10,3,"TITULAR",false],["TX1271","2026-03-24T21:40","PETZ","Pet",67.17,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1218","2026-03-25T22:39","MAGAZINE LUIZA","E-Commerce",611.07,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1426","2026-03-26T12:59","MC DONALDS","Restaurante",63.12,"Nao Informado","BR","credito_a_vista",1,null,"TITULAR",false],["TX1149","2026-03-26T13:44","SHOPEE *SHOPEE","E-Commerce",65.12,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1457","2026-03-26T14:48","SHOPEE *SHOPEE","E-Commerce",40.89,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1174","2026-03-26T20:44","IFOOD *RESTAURANTE","Delivery",45.18,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1281","2026-03-27T09:21","INGRESSO.COM","Lazer",82.43,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1227","2026-03-27T11:08","CARREFOUR HIPER","Supermercado",319.71,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1473","2026-03-27T14:52","DROGARIA SAO PAULO","Farmacia",157.52,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1301","2026-03-27T20:09","DECOLAR.COM","Viagem",357.45,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1266","2026-03-28T12:21","UBER *TRIP","Transporte",18.41,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1128","2026-03-28T18:17","UBER *TRIP","Transporte",57.56,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1049","2026-03-29T09:18","INGRESSO.COM","Lazer",48.44,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1253","2026-03-29T10:23","DROGASIL","Farmacia",112.42,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1459","2026-03-29T17:49","MERCADO DIA%","Supermercado",115.71,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1287","2026-03-29T20:12","MC DONALDS","Restaurante",70.0,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1378","2026-03-30T20:51","ESTACIONAMENTO ESTAPAR","Estacionamento",21.58,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1379","2026-03-30T22:28","MERCADO DIA%","Supermercado",49.36,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1093","2026-03-31T12:52","DROGASIL","Farmacia",132.63,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1283","2026-03-31T19:41","IFOOD *RESTAURANTE","Delivery",71.35,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1299","2026-03-31T22:01","DROGASIL","Farmacia",22.19,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1095","2026-03-31T22:25","UBER *TRIP","Transporte",59.06,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1246","2026-04-01T08:36","UBER *TRIP","Transporte",20.64,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1447","2026-04-01T08:50","PADARIA BELLA MASSA","Padaria",13.56,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1261","2026-04-01T09:25","LIVRARIA CULTURA","Educacao",120.33,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1122","2026-04-01T12:48","SUPERMERCADO PAO DE ACUCAR","Supermercado",395.78,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1466","2026-04-01T16:05","MERCADO DIA%","Supermercado",81.81,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1374","2026-04-01T18:49","SHOPEE *SHOPEE","E-Commerce",148.37,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1144","2026-04-01T19:21","MC DONALDS","Restaurante",64.61,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1231","2026-04-02T20:50","SUPERMERCADO PAO DE ACUCAR","Supermercado",297.88,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1224","2026-04-03T07:43","STARBUCKS BR","Cafeteria",31.33,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1045","2026-04-03T11:08","ESTACIONAMENTO ESTAPAR","Estacionamento",28.29,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1139","2026-04-03T18:57","DROGARIA SAO PAULO","Farmacia",93.56,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1396","2026-04-03T19:15","AIRBNB * HMRSTAY","Viagem",884.4,"Rio de Janeiro","BR","credito_a_vista",1,null,"TITULAR",false],["TX1358","2026-04-04T08:25","ESTACIONAMENTO ESTAPAR","Estacionamento",30.82,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1483","2026-04-04T14:07","DECOLAR.COM","Viagem",810.0,"Sao Paulo","BR","credito_parcelado",4,3,"TITULAR",false],["TX1022","2026-04-05T02:09","SMARTFIT","Academia",119.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1019","2026-04-05T06:51","SPOTIFY","Streaming",21.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1079","2026-04-05T08:10","PADARIA BELLA MASSA","Padaria",47.52,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1366","2026-04-05T13:43","SUPERMERCADO PAO DE ACUCAR","Supermercado",442.56,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1087","2026-04-05T17:35","SUPERMERCADO PAO DE ACUCAR","Supermercado",239.02,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1217","2026-04-06T09:43","CINEMARK","Lazer",58.29,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1310","2026-04-06T12:47","POSTO SHELL","Combustivel",164.28,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1410","2026-04-07T09:43","POSTO SHELL","Combustivel",257.42,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1492","2026-04-07T20:04","TOK STOK","Casa E Decoracao",483.33,"Sao Paulo","BR","credito_parcelado",3,2,"TITULAR",false],["TX1023","2026-04-08T01:48","ALURA CURSOS","Educacao",75.0,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1040","2026-04-08T12:59","DROGASIL","Farmacia",107.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1143","2026-04-08T13:01","LIVRARIA CULTURA","Educacao",132.86,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1194","2026-04-08T13:40","SHOPEE *SHOPEE","E-Commerce",179.18,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1432","2026-04-08T19:34","UBER *TRIP","Transporte",27.96,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1092","2026-04-08T21:02","HORTIFRUTI NATURAL DA TERRA","Supermercado",67.66,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1238","2026-04-08T23:33","UBER *TRIP","Transporte",32.69,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1300","2026-04-09T07:23","STARBUCKS BR","Cafeteria",15.85,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1318","2026-04-09T13:11","DROGARIA SAO PAULO","Farmacia",130.73,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1119","2026-04-09T16:09","STARBUCKS BR","Cafeteria",21.42,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1204","2026-04-09T20:06","OUTBACK STEAKHOUSE","Restaurante",196.27,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1352","2026-04-09T23:26","UBER *TRIP","Transporte",58.13,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1018","2026-04-10T06:00","NETFLIX.COM","Streaming",44.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1126","2026-04-11T17:36","SUPERMERCADO PAO DE ACUCAR","Supermercado",90.03,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1472","2026-04-12T13:53","SUPERMERCADO PAO DE ACUCAR","Supermercado",220.56,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1494","2026-04-12T15:43","CENTAURO","Vestuario",299.97,"Sao Paulo","BR","credito_parcelado",3,1,"TITULAR",false],["TX1135","2026-04-12T19:12","POSTO SHELL","Combustivel",206.58,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1336","2026-04-12T19:33","UBER *TRIP","Transporte",48.46,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1043","2026-04-12T22:58","AMAZON BR","E-Commerce",294.25,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1350","2026-04-13T09:48","99APP *99APP","Transporte",30.11,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1478","2026-04-14T16:36","MAGAZINE LUIZA","E-Commerce",399.98,"Sao Paulo","BR","credito_parcelado",6,4,"TITULAR",false],["TX1397","2026-04-14T21:59","IFOOD *RESTAURANTE","Delivery",87.15,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1104","2026-04-14T22:53","UBER *TRIP","Transporte",25.19,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1020","2026-04-15T01:44","AMAZON PRIME","Streaming",19.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1089","2026-04-15T17:47","MAGAZINE LUIZA","E-Commerce",839.13,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1280","2026-04-15T20:21","POSTO SHELL","Combustivel",207.62,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1444","2026-04-16T08:01","MAGAZINE LUIZA","E-Commerce",672.2,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1371","2026-04-16T13:26","IFOOD *RESTAURANTE","Delivery",79.25,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1425","2026-04-16T14:35","MAGAZINE LUIZA","E-Commerce",189.96,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1263","2026-04-17T12:07","CINEMARK","Lazer",31.25,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1256","2026-04-17T12:13","DROGARIA SAO PAULO","Farmacia",101.98,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1241","2026-04-17T19:06","ESTACIONAMENTO ESTAPAR","Estacionamento",26.08,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1103","2026-04-18T20:43","OUTBACK STEAKHOUSE","Restaurante",300.56,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1286","2026-04-19T16:23","LIVRARIA CULTURA","Educacao",76.7,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1245","2026-04-19T21:58","UDEMY","Educacao",31.09,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1021","2026-04-20T03:21","GOOGLE *YOUTUBEPREMIUM","Streaming",28.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1502","2026-04-20T08:01","ESTORNO MAGAZINE LUIZA","E-Commerce",-672.2,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1160","2026-04-20T12:36","C&A MODAS","Vestuario",63.85,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1115","2026-04-20T21:58","MERCADOLIVRE*MERCADOPAGO","E-Commerce",214.51,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1243","2026-04-21T09:47","MERCADO DIA%","Supermercado",60.4,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1461","2026-04-21T10:43","POSTO SHELL","Combustivel",218.92,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1465","2026-04-21T20:35","RAPPI*RAPPI BRASIL","Delivery",50.75,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1240","2026-04-21T20:56","MC DONALDS","Restaurante",43.62,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1488","2026-04-22T09:46","CASAS BAHIA","E-Commerce",189.9,"Sao Paulo","BR","credito_parcelado",10,4,"TITULAR",false],["TX1451","2026-04-22T18:50","AMAZON BR","E-Commerce",354.71,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1141","2026-04-22T21:46","CLINICA ODONTO SORRIA","Saude",217.1,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1191","2026-04-23T09:33","HORTIFRUTI NATURAL DA TERRA","Supermercado",66.55,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1291","2026-04-23T11:26","RAPPI*RAPPI BRASIL","Delivery",60.58,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1294","2026-04-23T15:49","RENNER","Vestuario",285.66,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1057","2026-04-23T22:33","POSTO SHELL","Combustivel",121.78,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1172","2026-04-24T22:17","DECOLAR.COM","Viagem",1795.42,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1233","2026-04-25T20:23","AMAZON BR","E-Commerce",370.42,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1321","2026-04-25T23:45","UBER *TRIP","Transporte",18.33,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1277","2026-04-26T09:51","CARREFOUR HIPER","Supermercado",445.19,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1331","2026-04-26T10:57","MERCADO DIA%","Supermercado",67.29,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1116","2026-04-26T12:48","AMAZON BR","E-Commerce",509.52,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1363","2026-04-27T10:38","MERCADOLIVRE*MERCADOPAGO","E-Commerce",244.09,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1221","2026-04-27T13:42","POSTO SHELL","Combustivel",225.37,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1216","2026-04-27T19:43","IFOOD *RESTAURANTE","Delivery",72.06,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1389","2026-04-27T22:33","UBER *TRIP","Transporte",54.46,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1235","2026-04-28T07:03","UBER *TRIP","Transporte",52.36,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1355","2026-04-28T11:13","MERCADOLIVRE*MERCADOPAGO","E-Commerce",174.98,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1264","2026-04-28T21:44","PETZ","Pet",105.13,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1127","2026-04-29T12:03","IFOOD *RESTAURANTE","Delivery",51.54,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1181","2026-04-29T12:41","IFOOD *RESTAURANTE","Delivery",35.78,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1065","2026-04-29T12:55","UBER *TRIP","Transporte",13.77,"Nao Informado","BR","credito_a_vista",1,null,"TITULAR",false],["TX1351","2026-04-30T07:17","STARBUCKS BR","Cafeteria",22.44,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1390","2026-04-30T12:12","MERCADOLIVRE*MERCADOPAGO","E-Commerce",72.87,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1335","2026-04-30T20:35","POSTO SHELL","Combustivel",210.15,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1129","2026-05-01T08:47","MERCADO DIA%","Supermercado",29.95,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1453","2026-05-02T12:02","RENNER","Vestuario",81.56,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1055","2026-05-02T16:10","BOOKING.COM","Viagem",569.37,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1106","2026-05-02T20:57","MERCADOLIVRE*MERCADOPAGO","E-Commerce",337.78,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1384","2026-05-03T18:12","AMAZON BR","E-Commerce",579.61,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1394","2026-05-03T19:59","IFOOD *RESTAURANTE","Delivery",25.48,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1347","2026-05-04T12:51","UBER *TRIP","Transporte",44.25,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1484","2026-05-04T18:12","DECOLAR.COM","Viagem",810.0,"Sao Paulo","BR","credito_parcelado",4,4,"TITULAR",false],["TX1025","2026-05-05T00:24","SPOTIFY","Streaming",21.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1028","2026-05-05T04:16","SMARTFIT","Academia",119.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1117","2026-05-05T18:15","MERCADOLIVRE*MERCADOPAGO","E-Commerce",211.95,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1054","2026-05-05T21:04","MERCADO DIA%","Supermercado",75.61,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1439","2026-05-06T10:58","SHOPEE *SHOPEE","E-Commerce",115.3,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1438","2026-05-06T15:10","INGRESSO.COM","Lazer",102.57,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1236","2026-05-06T19:58","HORTIFRUTI NATURAL DA TERRA","Supermercado",35.88,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1387","2026-05-07T10:59","ESTACIONAMENTO ESTAPAR","Estacionamento",43.75,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1471","2026-05-07T17:39","PETZ","Pet",122.42,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1493","2026-05-07T21:50","TOK STOK","Casa E Decoracao",483.33,"Sao Paulo","BR","credito_parcelado",3,3,"TITULAR",false],["TX1029","2026-05-08T06:02","ALURA CURSOS","Educacao",75.0,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1433","2026-05-08T15:06","MERCADOLIVRE*MERCADOPAGO","E-Commerce",442.06,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1354","2026-05-08T22:19","CLINICA ODONTO SORRIA","Saude",155.79,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1050","2026-05-09T17:11","PADARIA BELLA MASSA","Padaria",51.07,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1458","2026-05-09T19:22","MERCADO DIA%","Supermercado",34.28,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1212","2026-05-09T22:17","SHOPEE *SHOPEE","E-Commerce",45.44,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1339","2026-05-09T22:55","DROGARIA SAO PAULO","Farmacia",153.02,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1024","2026-05-10T02:06","NETFLIX.COM","Streaming",44.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1309","2026-05-10T16:01","MERCADOLIVRE*MERCADOPAGO","E-Commerce",396.17,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1278","2026-05-10T18:11","MERCADO DIA%","Supermercado",48.54,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1078","2026-05-10T19:08","MC DONALDS","Restaurante",40.71,"Nao Informado","BR","credito_a_vista",1,null,"TITULAR",false],["TX1365","2026-05-10T22:34","99APP *99APP","Transporte",38.06,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1098","2026-05-11T09:24","TOK STOK","Casa E Decoracao",284.87,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1182","2026-05-11T17:26","UBER *TRIP","Transporte",34.12,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1393","2026-05-12T13:05","DROGARIA SAO PAULO","Farmacia",127.08,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1495","2026-05-12T16:08","CENTAURO","Vestuario",299.97,"Nao Informado","BR","credito_parcelado",3,2,"TITULAR",false],["TX1176","2026-05-12T21:00","ESTACIONAMENTO ESTAPAR","Estacionamento",40.69,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1107","2026-05-12T23:21","UBER *TRIP","Transporte",50.92,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1075","2026-05-14T13:59","RENNER","Vestuario",119.24,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1140","2026-05-14T19:39","RAPPI*RAPPI BRASIL","Delivery",75.18,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1479","2026-05-14T21:15","MAGAZINE LUIZA","E-Commerce",399.98,"Sao Paulo","BR","credito_parcelado",6,5,"TITULAR",false],["TX1026","2026-05-15T00:22","AMAZON PRIME","Streaming",19.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1440","2026-05-15T08:53","CARREFOUR HIPER","Supermercado",94.19,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1373","2026-05-15T14:20","AMAZON BR","E-Commerce",294.71,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1279","2026-05-15T16:39","DROGARIA SAO PAULO","Farmacia",78.22,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1497","2026-05-16T13:42","UBER *TRIP BUENOS AIRES","Transporte",18.5,"Buenos Aires","AR","credito_a_vista",1,null,"TITULAR",false],["TX1304","2026-05-16T14:07","TOK STOK","Casa E Decoracao",172.36,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1498","2026-05-16T20:27","RESTAURANTE DON JULIO","Restaurante",320.0,"Buenos Aires","AR","credito_a_vista",1,null,"TITULAR",false],["TX1267","2026-05-16T21:12","IFOOD *RESTAURANTE","Delivery",79.34,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1052","2026-05-16T22:00","SHOPEE *SHOPEE","E-Commerce",74.97,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1452","2026-05-16T22:02","HORTIFRUTI NATURAL DA TERRA","Supermercado",46.91,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1413","2026-05-17T14:52","DROGARIA SAO PAULO","Farmacia",59.6,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1499","2026-05-18T10:28","CAFE TORTONI","Cafeteria",45.8,"Buenos Aires","AR","credito_a_vista",1,null,"TITULAR",false],["TX1501","2026-05-18T17:32","MUSEO MALBA","Lazer",55.0,"Buenos Aires","AR","credito_a_vista",1,null,"TITULAR",false],["TX1123","2026-05-18T19:47","DROGARIA SAO PAULO","Farmacia",147.98,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1380","2026-05-18T19:59","MC DONALDS","Restaurante",56.33,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1400","2026-05-18T20:42","AMAZON BR","E-Commerce",158.4,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1417","2026-05-19T08:48","STARBUCKS BR","Cafeteria",38.28,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1056","2026-05-19T13:45","MC DONALDS","Restaurante",42.95,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1500","2026-05-19T16:37","FARMACITY","Farmacia",62.3,"Buenos Aires","AR","credito_a_vista",1,null,"TITULAR",false],["TX1120","2026-05-19T19:26","UBER *TRIP","Transporte",20.34,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1027","2026-05-20T06:22","GOOGLE *YOUTUBEPREMIUM","Streaming",28.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1320","2026-05-20T19:20","RAPPI*RAPPI BRASIL","Delivery",24.8,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1437","2026-05-21T18:43","AMAZON BR","E-Commerce",180.39,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1180","2026-05-22T07:35","UBER *TRIP","Transporte",14.66,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1183","2026-05-22T10:24","DROGASIL","Farmacia",139.45,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1162","2026-05-22T12:10","RAPPI*RAPPI BRASIL","Delivery",44.51,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1154","2026-05-22T12:44","CARREFOUR HIPER","Supermercado",353.42,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1450","2026-05-22T15:03","POSTO SHELL","Combustivel",101.7,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1489","2026-05-22T16:45","CASAS BAHIA","E-Commerce",189.9,"Sao Paulo","BR","credito_parcelado",10,5,"TITULAR",false],["TX1187","2026-05-22T22:24","UBER *TRIP","Transporte",56.64,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1145","2026-05-23T07:33","UBER *TRIP","Transporte",14.28,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1215","2026-05-23T13:05","ESTACIONAMENTO ESTAPAR","Estacionamento",25.02,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1361","2026-05-23T18:48","99APP *99APP","Transporte",17.16,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1146","2026-05-23T20:15","AMAZON BR","E-Commerce",303.99,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1044","2026-05-24T10:16","PADARIA BELLA MASSA","Padaria",36.31,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1504","2026-05-24T20:42","ESTORNO AMAZON BR","E-Commerce",-158.4,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1344","2026-05-25T07:52","99APP *99APP","Transporte",10.16,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1137","2026-05-25T11:22","IFOOD *RESTAURANTE","Delivery",54.99,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1448","2026-05-25T11:44","DROGASIL","Farmacia",55.5,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1454","2026-05-25T18:02","SHOPEE *SHOPEE","E-Commerce",186.82,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1392","2026-05-26T12:11","UBER *TRIP","Transporte",52.81,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1188","2026-05-27T09:14","STARBUCKS BR","Cafeteria",38.27,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1370","2026-05-27T19:07","SUPERMERCADO PAO DE ACUCAR","Supermercado",87.01,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1368","2026-05-28T11:46","C&A MODAS","Vestuario",184.21,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1345","2026-05-28T12:41","INGRESSO.COM","Lazer",100.19,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1036","2026-05-28T12:45","99APP *99APP","Transporte",10.88,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1061","2026-05-28T15:15","RENNER","Vestuario",197.16,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1353","2026-05-28T18:12","UBER *TRIP","Transporte",17.97,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1157","2026-05-28T18:43","MERCADO DIA%","Supermercado",39.41,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1074","2026-05-29T10:02","PADARIA BELLA MASSA","Padaria",13.69,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1343","2026-05-29T10:10","CENTAURO","Vestuario",283.59,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1407","2026-05-29T12:02","MC DONALDS","Restaurante",40.5,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1148","2026-05-29T13:30","UDEMY","Educacao",60.82,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1210","2026-05-29T13:46","SUPERMERCADO PAO DE ACUCAR","Supermercado",113.35,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1270","2026-05-29T15:43","RENNER","Vestuario",315.79,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1275","2026-05-29T16:50","DROGASIL","Farmacia",135.94,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1404","2026-05-30T20:05","MC DONALDS","Restaurante",47.97,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1381","2026-05-31T11:15","PETZ","Pet",160.57,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1455","2026-05-31T12:48","MC DONALDS","Restaurante",57.07,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1244","2026-05-31T16:35","CARREFOUR HIPER","Supermercado",368.21,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1254","2026-06-02T09:56","RENNER","Vestuario",105.12,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1229","2026-06-02T11:17","IFOOD *RESTAURANTE","Delivery",93.88,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1152","2026-06-02T12:06","MERCADOLIVRE*MERCADOPAGO","E-Commerce",107.5,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1114","2026-06-02T13:48","MAGAZINE LUIZA","E-Commerce",442.91,"Nao Informado","BR","credito_a_vista",1,null,"TITULAR",false],["TX1047","2026-06-02T15:33","POSTO SHELL","Combustivel",274.79,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1306","2026-06-02T16:01","AMAZON BR","E-Commerce",326.19,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1356","2026-06-02T22:53","AMAZON BR","E-Commerce",414.97,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1167","2026-06-02T23:58","UBER *TRIP","Transporte",31.96,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1258","2026-06-03T08:00","ESTACIONAMENTO ESTAPAR","Estacionamento",21.95,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1031","2026-06-05T04:07","SPOTIFY","Streaming",21.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1034","2026-06-05T06:40","SMARTFIT","Academia",119.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1349","2026-06-05T09:20","99APP *99APP","Transporte",38.45,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1105","2026-06-05T18:20","C&A MODAS","Vestuario",151.61,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1133","2026-06-05T22:47","RAPPI*RAPPI BRASIL","Delivery",26.87,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1375","2026-06-06T09:12","PADARIA BELLA MASSA","Padaria",22.56,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1292","2026-06-06T12:48","DROGARIA SAO PAULO","Farmacia",145.41,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1109","2026-06-06T21:49","AMAZON BR","E-Commerce",292.31,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1234","2026-06-07T11:46","MC DONALDS","Restaurante",65.89,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1249","2026-06-07T18:41","PETZ","Pet",44.73,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1443","2026-06-07T22:30","UDEMY","Educacao",58.15,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1035","2026-06-08T04:56","ALURA CURSOS","Educacao",75.0,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1200","2026-06-08T18:15","POSTO SHELL","Combustivel",264.31,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1369","2026-06-08T20:53","CINEMARK","Lazer",38.87,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1030","2026-06-10T05:29","NETFLIX.COM","Streaming",44.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1421","2026-06-10T20:35","RAPPI*RAPPI BRASIL","Delivery",22.81,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1272","2026-06-11T12:50","DROGARIA SAO PAULO","Farmacia",114.63,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1496","2026-06-11T19:19","CENTAURO","Vestuario",299.97,"Sao Paulo","BR","credito_parcelado",3,3,"TITULAR",false],["TX1463","2026-06-12T10:47","POSTO SHELL","Combustivel",157.0,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1252","2026-06-12T11:05","IFOOD *RESTAURANTE","Delivery",62.13,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1084","2026-06-12T14:53","MERCADO DIA%","Supermercado",29.19,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1323","2026-06-13T07:04","UBER *TRIP","Transporte",41.88,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1201","2026-06-13T12:29","DROGASIL","Farmacia",105.02,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1480","2026-06-13T14:24","MAGAZINE LUIZA","E-Commerce",399.98,"Sao Paulo","BR","credito_parcelado",6,6,"TITULAR",false],["TX1085","2026-06-13T19:10","IFOOD *RESTAURANTE","Delivery",55.93,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1398","2026-06-13T19:23","IFOOD *RESTAURANTE","Delivery",40.46,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1051","2026-06-13T22:38","UBER *TRIP","Transporte",17.64,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1296","2026-06-14T15:55","CARREFOUR HIPER","Supermercado",315.09,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1409","2026-06-14T20:23","IFOOD *RESTAURANTE","Delivery",51.77,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1032","2026-06-15T03:05","AMAZON PRIME","Streaming",19.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1391","2026-06-15T12:45","DROGASIL","Farmacia",16.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1138","2026-06-15T13:00","MERCADOLIVRE*MERCADOPAGO","E-Commerce",203.52,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1274","2026-06-15T21:54","MERCADO DIA%","Supermercado",83.43,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1130","2026-06-16T07:49","STARBUCKS BR","Cafeteria",16.21,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1276","2026-06-16T11:20","RENNER","Vestuario",197.93,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1192","2026-06-17T10:04","APPLE.COM/BILL","Servicos Digitais",48.98,"Nao Informado","BR","credito_a_vista",1,null,"TITULAR",false],["TX1269","2026-06-17T12:11","IFOOD *RESTAURANTE","Delivery",68.96,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1080","2026-06-17T16:00","TOK STOK","Casa E Decoracao",378.67,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1449","2026-06-17T21:41","MERCADO DIA%","Supermercado",28.01,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1282","2026-06-18T10:55","PADARIA BELLA MASSA","Padaria",25.0,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1186","2026-06-18T15:55","C&A MODAS","Vestuario",152.71,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1311","2026-06-18T16:06","STARBUCKS BR","Cafeteria",32.46,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1289","2026-06-19T13:56","SUPERMERCADO PAO DE ACUCAR","Supermercado",308.67,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1165","2026-06-19T20:59","C&A MODAS","Vestuario",147.78,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1033","2026-06-20T04:18","GOOGLE *YOUTUBEPREMIUM","Streaming",28.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",true],["TX1308","2026-06-20T12:33","RAPPI*RAPPI BRASIL","Delivery",24.06,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1102","2026-06-20T18:20","UBER *TRIP","Transporte",44.86,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1332","2026-06-20T18:45","UBER *TRIP","Transporte",37.5,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1490","2026-06-21T12:28","CASAS BAHIA","E-Commerce",189.9,"Sao Paulo","BR","credito_parcelado",10,6,"TITULAR",false],["TX1422","2026-06-21T14:50","INGRESSO.COM","Lazer",62.09,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1091","2026-06-21T21:47","APPLE.COM/BILL","Servicos Digitais",22.31,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1255","2026-06-22T09:17","CARREFOUR HIPER","Supermercado",364.49,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1063","2026-06-22T18:41","CARREFOUR HIPER","Supermercado",87.88,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1073","2026-06-22T21:15","CARREFOUR HIPER","Supermercado",115.15,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1208","2026-06-23T17:46","PADARIA BELLA MASSA","Padaria",39.66,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1360","2026-06-24T17:07","PETZ","Pet",215.51,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1048","2026-06-24T19:07","SUPERMERCADO PAO DE ACUCAR","Supermercado",407.37,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1199","2026-06-24T20:11","RENNER","Vestuario",110.77,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1206","2026-06-25T20:47","RENNER","Vestuario",324.08,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1348","2026-06-26T08:10","MERCADO DIA%","Supermercado",64.48,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1111","2026-06-26T08:57","AIRBNB * HMRSTAY","Viagem",1067.42,"Rio de Janeiro","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1193","2026-06-27T14:41","PETZ","Pet",193.32,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1121","2026-06-28T08:54","C&A MODAS","Vestuario",226.09,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1313","2026-06-28T15:40","DROGASIL","Farmacia",124.55,"Nao Informado","BR","credito_a_vista",1,null,"TITULAR",false],["TX1302","2026-06-28T21:08","AMAZON BR","E-Commerce",433.63,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1239","2026-06-29T09:54","HORTIFRUTI NATURAL DA TERRA","Supermercado",82.07,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1219","2026-06-29T12:41","DROGASIL","Farmacia",30.75,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1205","2026-06-29T17:01","UBER *TRIP","Transporte",42.91,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1168","2026-06-29T18:17","UBER *TRIP","Transporte",37.0,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1285","2026-06-29T21:47","LIVRARIA CULTURA","Educacao",139.93,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1372","2026-06-30T10:33","CARREFOUR HIPER","Supermercado",318.01,"Sao Paulo","BR","credito_a_vista",1,null,"ADICIONAL",false],["TX1431","2026-06-30T11:25","LEROY MERLIN","Casa E Construcao",153.9,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1416","2026-06-30T21:03","LIVRARIA CULTURA","Educacao",120.16,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false],["TX1189","2026-06-30T22:51","AMAZON BR","E-Commerce",253.13,"Sao Paulo","BR","credito_a_vista",1,null,"TITULAR",false]];
+
+/* ============ PREPARO ============ */
+const MES = {1:"Jan",2:"Fev",3:"Mar",4:"Abr",5:"Mai",6:"Jun",7:"Jul",8:"Ago",9:"Set",10:"Out",11:"Nov",12:"Dez"};
+const DIAS = ["Seg","Ter","Qua","Qui","Sex","Sáb","Dom"];
+const TX = RAW.map(r => {
+  const dt = new Date(r[1]);
+  return { id:r[0], iso:r[1], est:r[2], cat:r[3], v:r[4], cidade:r[5], pais:r[6],
+           tipo:r[7], parc:r[8], np:r[9], tit:r[10], ass:r[11],
+           m:+r[1].slice(5,7), h:+r[1].slice(11,13), dow:(dt.getDay()+6)%7, dt };
+});
+const ALLCATS = [...new Set(TX.map(t => t.cat))];
+// cores por categoria, atribuídas por ranking geral de gasto
+const PALETTE = ["#06b6d4","#10b981","#a855f7","#f59e0b","#0ea5e9","#ec4899","#fb923c","#84cc16","#22d3ee","#34d399","#c084fc","#fbbf24","#38bdf8","#f472b6","#fdba74","#a3e635","#67e8f9","#6ee7b7","#d8b4fe","#fde047","#7dd3fc"];
+const rankCats = [...ALLCATS].sort((a,b) => sum(TX.filter(t=>t.cat===b)) - sum(TX.filter(t=>t.cat===a)));
+const CATCOLOR = {}; rankCats.forEach((c,i) => CATCOLOR[c] = PALETTE[i % PALETTE.length]);
+
+/* ============ ESTADO E FILTROS ============ */
+const state = { m1:1, m2:6, cats:new Set(ALLCATS), tit:"ALL", tipo:"ALL", excl:false,
+                q:"", sort:{k:"d",dir:-1}, page:0 };
+
+function F() {
+  return TX.filter(t =>
+    t.m >= state.m1 && t.m <= state.m2 &&
+    state.cats.has(t.cat) &&
+    (state.tit === "ALL" || t.tit === state.tit) &&
+    (state.tipo === "ALL" || t.tipo === state.tipo) &&
+    (!state.excl || t.v >= 0));
+}
+
+/* ============ HELPERS ============ */
+function sum(rows) { return rows.reduce((a,t) => a + t.v, 0); }
+function fmt(v, dec=0) { return "R$ " + v.toLocaleString("pt-BR", {minimumFractionDigits:dec, maximumFractionDigits:dec}); }
+function fmtK(v) { return Math.abs(v) >= 1000 ? "R$ " + (v/1000).toLocaleString("pt-BR",{maximumFractionDigits:1}) + " mil" : fmt(v); }
+function pct(x) { return x.toLocaleString("pt-BR",{maximumFractionDigits:1}) + "%"; }
+function groupSum(rows, key) {
+  const g = {};
+  rows.forEach(t => { const k = key(t); g[k] = (g[k]||0) + t.v; });
+  return g;
+}
+function esc(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+function monthsInRange() { const a=[]; for (let m=state.m1; m<=state.m2; m++) a.push(m); return a; }
+
+/* ============ PÁGINA 1 ============ */
+function renderP1(rows) {
+  const meses = monthsInRange();
+  const porMes = meses.map(m => sum(rows.filter(t => t.m === m)));
+  const total = sum(rows);
+  const media = total / Math.max(meses.length, 1);
+
+  // KPI 1 — último mês do intervalo
+  const lastM = state.m2, gastoLast = sum(rows.filter(t => t.m === lastM));
+  const refMedia = meses.length > 1 ? media : sum(TX.filter(t => !state.excl || t.v >= 0)) / 6;
+  const delta = refMedia ? (gastoLast/refMedia - 1) * 100 : 0;
+  document.getElementById("kpi1-badge").textContent = MES[lastM];
+  document.getElementById("kpi1-v").textContent = fmt(gastoLast);
+  document.getElementById("kpi1-sub").textContent =
+    (delta >= 0 ? "+" : "−") + pct(Math.abs(delta)).replace("%","") + "% vs. média " + (meses.length>1 ? "do período" : "do semestre");
+
+  // KPI 2 — parcelas
+  const parcTot = sum(rows.filter(t => t.tipo === "credito_parcelado"));
+  const parcMes = parcTot / Math.max(meses.length,1);
+  document.getElementById("kpi2-v").textContent = fmt(parcMes) ;
+  document.getElementById("kpi2-sub").textContent = total ? pct(parcTot/total*100) + " do gasto comprometido" : "—";
+
+  // KPI 3 — assinaturas
+  const assinTot = sum(rows.filter(t => t.ass));
+  const assinMes = assinTot / Math.max(meses.length,1);
+  document.getElementById("kpi3-v").textContent = fmt(assinMes) + "/mês";
+  document.getElementById("kpi3-sub").textContent = fmt(assinMes*12) + " ao ano em serviços";
+
+  // KPI 4 — tickets (sempre sem estornos)
+  const compras = rows.filter(t => t.v >= 0).map(t => t.v).sort((a,b) => a-b);
+  const n = compras.length;
+  const mediana = n ? (n%2 ? compras[(n-1)/2] : (compras[n/2-1]+compras[n/2])/2) : 0;
+  document.getElementById("kpi4-badge").textContent = n.toLocaleString("pt-BR") + " compras";
+  document.getElementById("kpi4-v").textContent = n ? fmt(compras.reduce((a,b)=>a+b,0)/n) : "—";
+  document.getElementById("kpi4-sub").textContent = n ? "mediana " + fmt(mediana) : "sem compras no filtro";
+
+  // Evolução mensal
+  const maxMes = Math.max(...porMes, 1);
+  const iMax = porMes.indexOf(Math.max(...porMes));
+  document.getElementById("ev-total").textContent = "Período: " + fmt(total);
+  document.getElementById("ev-bars").innerHTML = porMes.map((v,i) =>
+    `<div class="flex-1 ${i===iMax ? "bg-yellow-50 shadow-md shadow-yellow-900/40 border border-yellow-200/70" : "bg-yellow-900/50"} rounded-t-2xl rounded-b-lg" style="height:${Math.max(v/maxMes*100,2)}%"></div>`).join("");
+  document.getElementById("ev-labels").innerHTML = meses.map((m,i) =>
+    `<div class="flex-1 ${i===iMax ? "font-semibold text-yellow-950" : ""}">${MES[m]}<br/><span class="font-medium text-yellow-950">${fmtK(porMes[i]).replace("R$ ","")}</span></div>`).join("");
+  document.getElementById("ev-media").textContent = fmt(media);
+  // desvio-padrão amostral (n-1), igual ao pandas no notebook (seção 8.2)
+  const cv = meses.length > 1 && media ? Math.sqrt(porMes.reduce((a,v)=>a+(v-media)**2,0)/(porMes.length-1))/media*100 : 0;
+  document.getElementById("ev-cv").textContent = meses.length > 1 ? pct(cv) : "—";
+
+  // Treemap
+  const byCat = Object.entries(groupSum(rows, t => t.cat)).sort((a,b) => b[1]-a[1]);
+  const top4 = byCat.slice(0,4), resto = byCat.slice(4);
+  const t3 = byCat.slice(0,3).reduce((a,[,v]) => a+v, 0);
+  document.getElementById("top3-badge").textContent = total ? "Top 3 = " + pct(t3/total*100) : "—";
+  const cell = (c, v, cls, big) => `
+    <div class="${cls} rounded-2xl border border-white/15 p-3 flex flex-col justify-between shadow-lg" style="background:${CATCOLOR[c]}${big?"":"cc"}">
+      <p class="text-${big?"sm":"xs"} font-semibold tracking-tight">${esc(c)}</p>
+      <div><p class="text-${big?"[22px]":"base"} font-semibold tracking-tight">${total ? pct(v/total*100) : "—"}</p>
+      ${big ? `<p class="text-[11px] text-white/70">${fmtK(v)}</p>` : ""}</div>
+    </div>`;
+  document.getElementById("treemap").innerHTML =
+    (top4[0] ? cell(top4[0][0], top4[0][1], "col-span-2 row-span-2", true) : "") +
+    (top4[1] ? cell(top4[1][0], top4[1][1], "col-span-2", true) : "") +
+    (top4[2] ? cell(top4[2][0], top4[2][1], "", false) : "") +
+    (top4[3] ? cell(top4[3][0], top4[3][1], "", false) : "");
+  document.getElementById("treemap-leg").innerHTML = resto.slice(0,5).map(([c,v]) =>
+    `<span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full" style="background:${CATCOLOR[c]}"></span>${esc(c)} ${total ? pct(v/total*100) : ""}</span>`).join("") +
+    (resto.length > 5 ? `<span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-neutral-600"></span>Outras ${total ? pct(resto.slice(5).reduce((a,[,v])=>a+v,0)/total*100) : ""}</span>` : "");
+
+  // Pareto
+  const byEst = Object.entries(groupSum(rows, t => t.est)).sort((a,b) => b[1]-a[1]);
+  const top10pct = total ? byEst.slice(0,10).reduce((a,[,v]) => a+v, 0)/total*100 : 0;
+  document.getElementById("top10-badge").textContent = "Top 10 = " + pct(top10pct);
+  const maxEst = byEst[0] ? byEst[0][1] : 1;
+  document.getElementById("pareto").innerHTML = byEst.slice(0,5).map(([e,v],i) => `
+    <div>
+      <div class="flex justify-between mb-1"><span class="text-neutral-300">${esc(e)}</span><span class="text-neutral-400">${fmt(v)}</span></div>
+      <div class="h-2.5 rounded-full bg-neutral-800"><div class="h-2.5 rounded-full" style="width:${v/maxEst*100}%;background:#06b6d4;opacity:${1 - i*0.15}"></div></div>
+    </div>`).join("") || `<p class="text-neutral-500">Sem dados no filtro.</p>`;
+
+  // Alertas
+  const alerts = [];
+  if (meses.length > 1 && porMes[iMax] > media * 1.2)
+    alerts.push(["alert-triangle","text-red-400","bg-red-500/10 border-red-500/30",
+      `<span class="font-medium text-red-300">${MES[meses[iMax]]} ${pct((porMes[iMax]/media-1)*100).replace("%","")}% acima da média</span> do período.`]);
+  const grandes = rows.filter(t => t.v > 500);
+  if (grandes.length)
+    alerts.push(["gem","text-amber-400","bg-amber-500/10 border-amber-500/30",
+      `<span class="font-medium text-amber-300">${grandes.length} compras &gt; R$ 500</span> = ${total ? pct(sum(grandes)/total*100) : "—"} do gasto.`]);
+  const deliv = rows.filter(t => t.cat === "Delivery");
+  if (deliv.length)
+    alerts.push(["bike","text-lime-400","bg-neutral-800/80 border-white/10",
+      `<span class="font-medium">Delivery ${(deliv.length/(meses.length*4.33)).toLocaleString("pt-BR",{maximumFractionDigits:1})}x/semana</span> — ${fmt(sum(deliv))} no período.`]);
+  const adic = sum(rows.filter(t => t.tit === "ADICIONAL"));
+  if (adic > 0 && state.tit === "ALL")
+    alerts.push(["users","text-purple-400","bg-neutral-800/80 border-white/10",
+      `<span class="font-medium">Cartão adicional = ${total ? pct(adic/total*100) : "—"}</span> do gasto do período.`]);
+  document.getElementById("alertas").innerHTML = alerts.length ? alerts.map(([ic,co,box,txt]) => `
+    <div class="rounded-2xl ${box} border p-3 flex items-start gap-2.5">
+      <i data-lucide="${ic}" class="h-4 w-4 ${co} shrink-0 mt-0.5"></i>
+      <p class="text-neutral-200 leading-snug">${txt}</p>
+    </div>`).join("") : `<p class="text-neutral-500">Nenhum alerta para os filtros atuais.</p>`;
+
+  // Hábitos
+  const noite = sum(rows.filter(t => t.h >= 18));
+  const fds = sum(rows.filter(t => t.dow >= 5));
+  document.getElementById("h-noite").textContent = total ? pct(noite/total*100) : "—";
+  document.getElementById("h-fds").textContent = total ? pct(fds/total*100) : "—";
+  const porHora = {}; rows.forEach(t => porHora[t.h] = (porHora[t.h]||0)+1);
+  const picoH = Object.entries(porHora).sort((a,b) => b[1]-a[1])[0];
+  document.getElementById("h-pico").textContent = picoH ? picoH[0] + "h–" + (+picoH[0]+1) + "h" : "—";
+}
+
+/* ============ PÁGINA 2 ============ */
+function renderP2(rows) {
+  const total = sum(rows);
+  const byCat = Object.entries(groupSum(rows, t => t.cat)).sort((a,b) => b[1]-a[1]);
+  const maxCat = byCat[0] ? Math.max(byCat[0][1], 1) : 1;
+  const allSelected = state.cats.size === ALLCATS.length;
+  document.getElementById("cat-bars").innerHTML = byCat.map(([c,v]) => `
+    <div class="cat-row cursor-pointer group" data-cat="${esc(c)}">
+      <div class="flex justify-between mb-1">
+        <span class="text-neutral-300 group-hover:text-white transition">${esc(c)}</span>
+        <span class="text-neutral-500">${fmt(v)} · ${total ? pct(v/total*100) : ""}</span>
+      </div>
+      <div class="h-2.5 rounded-full bg-neutral-800"><div class="h-2.5 rounded-full" style="width:${Math.max(v/maxCat*100,1)}%;background:${CATCOLOR[c]}"></div></div>
+    </div>`).join("") || `<p class="text-neutral-500">Sem dados.</p>`;
+  document.querySelectorAll(".cat-row").forEach(el => el.onclick = () => {
+    const c = el.dataset.cat;
+    if (allSelected) { state.cats = new Set([c]); }
+    else if (state.cats.size === 1 && state.cats.has(c)) { state.cats = new Set(ALLCATS); }
+    else { state.cats.has(c) ? state.cats.delete(c) : state.cats.add(c); if (!state.cats.size) state.cats = new Set(ALLCATS); }
+    syncCatUI(); renderAll();
+  });
+
+  // Linhas — top 5 categorias do período
+  const meses = monthsInRange();
+  const top5 = byCat.slice(0,5).map(([c]) => c);
+  const series = top5.map(c => meses.map(m => sum(rows.filter(t => t.cat === c && t.m === m))));
+  const maxY = Math.max(...series.flat(), 1);
+  const X0 = 40, X1 = 620, Y0 = 210, Y1 = 20;
+  const xs = i => meses.length > 1 ? X0 + (X1-X0) * i/(meses.length-1) : (X0+X1)/2;
+  const ys = v => Y0 - (Y0-Y1) * v/maxY;
+  let svg = "";
+  for (let g = 0; g <= 4; g++) {
+    const y = Y1 + (Y0-Y1)*g/4;
+    svg += `<line x1="${X0}" y1="${y}" x2="${X1}" y2="${y}" stroke="rgba(255,255,255,0.07)"/>`;
+    svg += `<text x="${X0-6}" y="${y+3}" fill="#737373" font-size="9" text-anchor="end">${fmtK(maxY*(1-g/4)).replace("R$ ","")}</text>`;
+  }
+  meses.forEach((m,i) => svg += `<text x="${xs(i)}" y="${Y0+16}" fill="#a3a3a3" font-size="10" text-anchor="middle">${MES[m]}</text>`);
+  top5.forEach((c,k) => {
+    const pts = series[k].map((v,i) => `${xs(i)},${ys(v)}`).join(" ");
+    svg += `<polyline points="${pts}" fill="none" stroke="${CATCOLOR[c]}" stroke-width="2.5" stroke-linejoin="round"/>`;
+    series[k].forEach((v,i) => svg += `<circle cx="${xs(i)}" cy="${ys(v)}" r="3.5" fill="${CATCOLOR[c]}"><title>${c} ${MES[meses[i]]}: ${fmt(v)}</title></circle>`);
+  });
+  document.getElementById("cat-lines").innerHTML = svg;
+  document.getElementById("cat-lines-leg").innerHTML = top5.map(c =>
+    `<span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full" style="background:${CATCOLOR[c]}"></span>${esc(c)}</span>`).join("");
+
+  // Scatter ticket × frequência
+  const stats = byCat.map(([c]) => {
+    const r = rows.filter(t => t.cat === c && t.v >= 0);
+    return { c, n:r.length, ticket: r.length ? sum(r)/r.length : 0, tot: sum(r) };
+  }).filter(s => s.n > 0);
+  const maxN = Math.max(...stats.map(s => s.n), 1), maxT = Math.max(...stats.map(s => s.ticket), 1);
+  const SX0=55, SX1=615, SY0=225, SY1=20;
+  let sc = `<line x1="${SX0}" y1="${SY0}" x2="${SX1}" y2="${SY0}" stroke="rgba(255,255,255,0.15)"/>
+            <line x1="${SX0}" y1="${SY0}" x2="${SX0}" y2="${SY1}" stroke="rgba(255,255,255,0.15)"/>
+            <text x="${(SX0+SX1)/2}" y="${SY0+22}" fill="#737373" font-size="10" text-anchor="middle">nº de compras →</text>
+            <text x="14" y="${(SY0+SY1)/2}" fill="#737373" font-size="10" text-anchor="middle" transform="rotate(-90 14 ${(SY0+SY1)/2})">ticket médio (R$) →</text>`;
+  stats.forEach(s => {
+    const x = SX0 + (SX1-SX0) * s.n/maxN, y = SY0 - (SY0-SY1) * s.ticket/maxT;
+    const r = 5 + 11 * Math.sqrt(s.tot / Math.max(...stats.map(q=>q.tot),1));
+    sc += `<circle cx="${x}" cy="${y}" r="${r}" fill="${CATCOLOR[s.c]}" fill-opacity="0.75" stroke="${CATCOLOR[s.c]}"><title>${s.c}: ${s.n} compras · ticket ${fmt(s.ticket)} · total ${fmt(s.tot)}</title></circle>`;
+    if (s.tot > sum(rows)*0.05) sc += `<text x="${x}" y="${y - r - 4}" fill="#d4d4d4" font-size="9" text-anchor="middle">${esc(s.c)}</text>`;
+  });
+  document.getElementById("cat-scatter").innerHTML = sc;
+
+  renderTable(rows);
+}
+
+function renderTable(rows) {
+  const q = state.q.toLowerCase();
+  let list = rows.filter(t => !q || t.est.toLowerCase().includes(q) || t.cat.toLowerCase().includes(q));
+  const k = state.sort.k, dir = state.sort.dir;
+  list = list.sort((a,b) => (k === "d" ? (a.iso < b.iso ? -1 : 1) : a.v - b.v) * dir);
+  const PER = 12, pages = Math.max(Math.ceil(list.length / PER), 1);
+  state.page = Math.min(state.page, pages - 1);
+  const slice = list.slice(state.page*PER, state.page*PER + PER);
+  document.getElementById("tx-table").innerHTML = slice.map(t => `
+    <tr class="border-b border-white/5 hover:bg-white/5 transition">
+      <td class="py-2 pr-3 text-neutral-400 whitespace-nowrap">${t.dt.toLocaleDateString("pt-BR")} ${t.iso.slice(11)}</td>
+      <td class="py-2 pr-3 text-neutral-200">${esc(t.est)}</td>
+      <td class="py-2 pr-3"><span class="inline-flex items-center gap-1.5"><span class="h-2 w-2 rounded-full" style="background:${CATCOLOR[t.cat]}"></span>${esc(t.cat)}</span></td>
+      <td class="py-2 pr-3 text-right font-medium ${t.v < 0 ? "text-red-400" : "text-neutral-100"}">${fmt(t.v,2)}</td>
+      <td class="py-2 pr-3 text-neutral-400">${t.tipo === "credito_parcelado" ? "Parcelado " + (t.np||"?") + "/" + t.parc : "À vista"}</td>
+      <td class="py-2 text-neutral-400">${t.tit === "ADICIONAL" ? "Adicional" : "Titular"}</td>
+    </tr>`).join("") || `<tr><td colspan="6" class="py-6 text-center text-neutral-500">Nenhuma transação encontrada.</td></tr>`;
+  document.getElementById("tx-info").textContent =
+    list.length ? `${state.page*PER+1}–${Math.min((state.page+1)*PER, list.length)} de ${list.length} transações` : "0 transações";
+  document.getElementById("tx-prev").disabled = state.page === 0;
+  document.getElementById("tx-next").disabled = state.page >= pages - 1;
+}
+
+/* ============ PÁGINA 3 ============ */
+function renderP3(rows) {
+  // Heatmap 7×24
+  const grid = Array.from({length:7}, () => Array(24).fill(0));
+  rows.forEach(t => grid[t.dow][t.h]++);
+  const maxC = Math.max(...grid.flat(), 1);
+  let hm = `<div class="grid" style="grid-template-columns:34px repeat(24,1fr);gap:3px">`;
+  hm += `<div></div>` + Array.from({length:24}, (_,h) =>
+    `<div class="text-center text-[9px] text-neutral-500">${h%3===0 ? h : ""}</div>`).join("");
+  for (let d = 0; d < 7; d++) {
+    hm += `<div class="text-[10px] text-neutral-400 flex items-center">${DIAS[d]}</div>`;
+    for (let h = 0; h < 24; h++) {
+      const c = grid[d][h];
+      hm += `<div class="rounded aspect-square" style="background:${c ? `rgba(6,182,212,${0.15 + 0.85*c/maxC})` : "rgba(255,255,255,0.04)"}" title="${DIAS[d]} ${h}h: ${c} transações"></div>`;
+    }
+  }
+  hm += `</div><div class="flex items-center gap-2 mt-3 text-[10px] text-neutral-500">
+    <span>menos</span><div class="h-2 w-24 rounded-full" style="background:linear-gradient(to right, rgba(6,182,212,0.15), rgba(6,182,212,1))"></div><span>mais</span></div>`;
+  document.getElementById("heatmap").innerHTML = hm;
+
+  // Períodos do dia
+  const per = [["Madrugada",0,5,"moon-star"],["Manhã",6,11,"sunrise"],["Tarde",12,17,"sun"],["Noite",18,23,"moon"]];
+  const perVals = per.map(([n,a,b]) => sum(rows.filter(t => t.h >= a && t.h <= b)));
+  const maxP = Math.max(...perVals, 1);
+  document.getElementById("periodos").innerHTML = per.map(([n,,,ic],i) => `
+    <div>
+      <div class="flex justify-between mb-1"><span class="flex items-center gap-1.5 text-neutral-300"><i data-lucide="${ic}" class="h-3.5 w-3.5 text-neutral-500"></i>${n}</span><span class="text-neutral-400">${fmt(perVals[i])}</span></div>
+      <div class="h-2 rounded-full bg-neutral-800"><div class="h-2 rounded-full bg-sky-500" style="width:${perVals[i]/maxP*100}%"></div></div>
+    </div>`).join("");
+
+  // Semana vs FDS
+  const sem = sum(rows.filter(t => t.dow < 5)), fds = sum(rows.filter(t => t.dow >= 5));
+  const tot = sem + fds || 1;
+  document.getElementById("fds").innerHTML = `
+    <div>
+      <div class="flex justify-between mb-1"><span class="text-neutral-300">Seg–Sex</span><span class="text-neutral-400">${fmt(sem)} · ${pct(sem/tot*100)}</span></div>
+      <div class="h-2 rounded-full bg-neutral-800"><div class="h-2 rounded-full bg-emerald-500" style="width:${sem/tot*100}%"></div></div>
+    </div>
+    <div>
+      <div class="flex justify-between mb-1"><span class="text-neutral-300">Sáb–Dom</span><span class="text-neutral-400">${fmt(fds)} · ${pct(fds/tot*100)}</span></div>
+      <div class="h-2 rounded-full bg-neutral-800"><div class="h-2 rounded-full bg-amber-400" style="width:${fds/tot*100}%"></div></div>
+    </div>
+    <p class="text-[11px] text-neutral-500 mt-1">Fim de semana = 2 de 7 dias (29% do tempo) — compare com a fatia do gasto.</p>`;
+
+  // Histograma
+  const bins = [[0,25],[25,50],[50,100],[100,200],[200,500],[500,Infinity]];
+  const labels = ["0–25","25–50","50–100","100–200","200–500","500+"];
+  const compras = rows.filter(t => t.v >= 0);
+  const counts = bins.map(([a,b]) => compras.filter(t => t.v >= a && t.v < b).length);
+  const maxH = Math.max(...counts, 1);
+  document.getElementById("hist").innerHTML = counts.map(c => `
+    <div class="flex-1 flex flex-col justify-end items-center gap-1 h-full">
+      <span class="text-[10px] text-neutral-400">${c}</span>
+      <div class="w-full rounded-t-xl bg-purple-500/80" style="height:${Math.max(c/maxH*100,2)}%"></div>
+    </div>`).join("");
+  document.getElementById("hist-labels").innerHTML = labels.map(l => `<div class="flex-1">${l}</div>`).join("");
+  const grandes = compras.filter(t => t.v > 500);
+  const totC = sum(compras) || 1;
+  document.getElementById("hist-note").textContent =
+    `${grandes.length} compras acima de R$ 500 (${pct(grandes.length/Math.max(compras.length,1)*100)} das transações) concentram ${pct(sum(grandes)/totC*100)} do valor gasto.`;
+
+  // Top compras
+  const top = [...compras].sort((a,b) => b.v - a.v).slice(0,8);
+  document.getElementById("top-compras").innerHTML = top.map((t,i) => `
+    <div class="flex items-center justify-between rounded-2xl bg-neutral-800/60 border border-white/5 px-3 py-2">
+      <span class="flex items-center gap-2.5">
+        <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-neutral-700 text-[10px] text-neutral-300">${i+1}</span>
+        <span>
+          <span class="text-neutral-200 block">${esc(t.est)}</span>
+          <span class="text-[10px] text-neutral-500">${t.dt.toLocaleDateString("pt-BR")} · ${esc(t.cat)}${t.tipo==="credito_parcelado" ? " · parcela "+(t.np||"?")+"/"+t.parc : ""}</span>
+        </span>
+      </span>
+      <span class="font-semibold text-neutral-100">${fmt(t.v,2)}</span>
+    </div>`).join("") || `<p class="text-neutral-500">Sem compras no filtro.</p>`;
+}
+
+/* ============ PÁGINA 4 ============ */
+function renderP4(rows) {
+  // Projeção de parcelas futuras (usa a base completa de parceladas)
+  const parc = TX.filter(t => t.tipo === "credito_parcelado" && t.np != null);
+  const byPurchase = {};
+  parc.forEach(t => {
+    const b = byPurchase[t.est] = byPurchase[t.est] || { v:t.v, pagas:0, tot:t.parc, lastM:0 };
+    b.pagas = Math.max(b.pagas, t.np); b.lastM = Math.max(b.lastM, t.m); b.v = t.v;
+  });
+  const proj = {};
+  Object.values(byPurchase).forEach(b => {
+    for (let k = 1; k <= b.tot - b.pagas; k++) { const m = b.lastM + k; if (m <= 12) proj[m] = (proj[m]||0) + b.v; }
+  });
+  const meses = [7,8,9,10,11,12];
+  const vals = meses.map(m => proj[m] || 0);
+  const maxV = Math.max(...vals, 1);
+  const totalProj = vals.reduce((a,b) => a+b, 0);
+  document.getElementById("proj-total").textContent = "A pagar: " + fmt(totalProj);
+  document.getElementById("proj-bars").innerHTML = vals.map(v =>
+    `<div class="flex-1 rounded-t-2xl rounded-b-lg ${v ? "bg-yellow-900/50" : "bg-yellow-900/15"}" style="height:${Math.max(v/maxV*100, 3)}%"></div>`).join("");
+  document.getElementById("proj-labels").innerHTML = meses.map((m,i) =>
+    `<div class="flex-1">${MES[m]}<br/><span class="font-medium text-yellow-950">${vals[i] ? fmt(vals[i]) : "—"}</span></div>`).join("");
+  const pend = Object.entries(byPurchase).filter(([,b]) => b.tot > b.pagas);
+  document.getElementById("proj-note").textContent = pend.length
+    ? `Pendentes: ${pend.map(([e,b]) => `${e} (${b.tot - b.pagas} de ${b.tot} parcelas restantes)`).join(" · ")}.`
+    : "Nenhuma compra parcelada com parcelas pendentes após junho.";
+
+  // Assinaturas
+  const assinRows = TX.filter(t => t.ass);
+  const byServ = {};
+  assinRows.forEach(t => byServ[t.est] = t.v);
+  const servs = Object.entries(byServ).sort((a,b) => b[1]-a[1]);
+  const totAssin = servs.reduce((a,[,v]) => a+v, 0);
+  document.getElementById("assin-total").textContent = fmt(totAssin) + "/mês";
+  document.getElementById("assin-list").innerHTML = servs.map(([s,v]) => `
+    <label class="flex items-center justify-between rounded-2xl bg-neutral-800/60 border border-white/5 px-3 py-2 cursor-pointer hover:bg-neutral-800 transition">
+      <span class="flex items-center gap-2.5">
+        <input type="checkbox" class="assin-cb h-3.5 w-3.5" data-v="${v}"/>
+        <span class="text-neutral-200">${esc(s)}</span>
+      </span>
+      <span class="text-neutral-400">${fmt(v,2)}/mês · ${fmt(v*12)}/ano</span>
+    </label>`).join("");
+  document.querySelectorAll(".assin-cb").forEach(cb => cb.onchange = renderSim);
+
+  // Bases do simulador (média mensal do semestre completo, como na seção 8.6 do notebook)
+  const FORA = ["Delivery","Restaurante","Cafeteria","Padaria"];
+  SIM.fora = sum(TX.filter(t => FORA.includes(t.cat)))/6;
+  SIM.ecom = sum(TX.filter(t => t.cat === "E-Commerce"))/6;
+  SIM.vest = sum(TX.filter(t => t.cat === "Vestuario"))/6;
+  SIM.media = sum(TX)/6;
+  document.getElementById("sim-fora-base").textContent = "Base: " + fmt(SIM.fora) + "/mês (delivery, restaurantes, cafés e padaria)";
+  document.getElementById("sim-ecom-base").textContent = "Base: " + fmt(SIM.ecom) + "/mês";
+  document.getElementById("sim-vest-base").textContent = "Base: " + fmt(SIM.vest) + "/mês";
+  document.getElementById("meta-media").textContent = fmt(SIM.media);
+  document.getElementById("meta-valor").textContent = fmt(SIM.media*0.15);
+  renderSim();
+}
+
+const SIM = { fora:0, ecom:0, vest:0, media:1 };
+function renderSim() {
+  const f = +document.getElementById("sim-fora").value;
+  const e = +document.getElementById("sim-ecom").value;
+  const v = +document.getElementById("sim-vest").value;
+  document.getElementById("sim-fora-v").textContent = f + "%";
+  document.getElementById("sim-ecom-v").textContent = e + "%";
+  document.getElementById("sim-vest-v").textContent = v + "%";
+  let eco = SIM.fora*f/100 + SIM.ecom*e/100 + SIM.vest*v/100;
+  document.querySelectorAll(".assin-cb:checked").forEach(cb => eco += +cb.dataset.v);
+  const meta = SIM.media * 0.15;
+  document.getElementById("sim-eco").textContent = fmt(eco);
+  document.getElementById("sim-eco-sub").textContent = "de economia por mês (" + pct(eco/SIM.media*100) + " do gasto médio) · " + fmt(eco*12) + "/ano";
+  document.getElementById("sim-meta-pct").textContent = pct(Math.min(eco/meta*100, 999));
+  document.getElementById("sim-bar").style.width = Math.min(eco/meta*100, 100) + "%";
+}
+
+/* ============ ORQUESTRAÇÃO ============ */
+function renderAll() {
+  const rows = F();
+  document.getElementById("badge-count").textContent =
+    rows.length.toLocaleString("pt-BR") + " transações · " + fmt(sum(rows));
+  renderP1(rows); renderP2(rows); renderP3(rows); renderP4(rows);
+  lucide.createIcons();
+}
+
+/* ============ FILTROS: UI ============ */
+function syncCatUI() {
+  const allSel = state.cats.size === ALLCATS.length;
+  document.getElementById("f-cat-label").textContent =
+    allSel ? "Categorias: Todas" : `Categorias: ${state.cats.size} de ${ALLCATS.length}`;
+  document.querySelectorAll("#f-cat-list input").forEach(cb => cb.checked = state.cats.has(cb.value));
+}
+
+function initFilters() {
+  const m1 = document.getElementById("f-m1"), m2 = document.getElementById("f-m2");
+  for (let m = 1; m <= 6; m++) {
+    m1.add(new Option(MES[m] + "/26", m)); m2.add(new Option(MES[m] + "/26", m));
+  }
+  m1.value = 1; m2.value = 6;
+  m1.onchange = () => { state.m1 = +m1.value; if (state.m1 > state.m2) { state.m2 = state.m1; m2.value = state.m2; } renderAll(); };
+  m2.onchange = () => { state.m2 = +m2.value; if (state.m2 < state.m1) { state.m1 = state.m2; m1.value = state.m1; } renderAll(); };
+
+  const list = document.getElementById("f-cat-list");
+  list.innerHTML = [...ALLCATS].sort().map(c => `
+    <label class="flex items-center gap-2 rounded-lg px-2 py-1 hover:bg-white/5 cursor-pointer text-xs text-neutral-200">
+      <input type="checkbox" value="${esc(c)}" checked class="h-3.5 w-3.5"/>
+      <span class="h-2 w-2 rounded-full" style="background:${CATCOLOR[c]}"></span>${esc(c)}
+    </label>`).join("");
+  list.querySelectorAll("input").forEach(cb => cb.onchange = () => {
+    cb.checked ? state.cats.add(cb.value) : state.cats.delete(cb.value);
+    if (!state.cats.size) { state.cats = new Set(ALLCATS); }
+    syncCatUI(); renderAll();
+  });
+  const btn = document.getElementById("f-cat-btn"), panel = document.getElementById("f-cat-panel");
+  btn.onclick = ev => { ev.stopPropagation(); panel.classList.toggle("hidden"); };
+  panel.onclick = ev => ev.stopPropagation();
+  document.addEventListener("click", () => panel.classList.add("hidden"));
+  document.getElementById("f-cat-all").onclick = () => { state.cats = new Set(ALLCATS); syncCatUI(); renderAll(); };
+  document.getElementById("f-cat-none").onclick = () => { state.cats = new Set(); document.querySelectorAll("#f-cat-list input").forEach(cb => cb.checked = false); document.getElementById("f-cat-label").textContent = "Categorias: 0 de " + ALLCATS.length; renderAll(); };
+
+  document.getElementById("f-titular").onchange = ev => { state.tit = ev.target.value; renderAll(); };
+  document.getElementById("f-tipo").onchange = ev => { state.tipo = ev.target.value; renderAll(); };
+
+  const est = document.getElementById("f-est");
+  const syncEst = () => {
+    est.className = "inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs border transition " +
+      (state.excl ? "bg-emerald-600/20 text-emerald-300 border-emerald-500/40"
+                  : "bg-neutral-800 text-neutral-400 border-white/10 hover:bg-neutral-700");
+    est.innerHTML = `<span class="relative inline-flex h-4 w-7 items-center rounded-full border ${state.excl ? "bg-emerald-500/80 border-emerald-300/60" : "bg-neutral-700 border-white/20"}">
+        <span class="absolute h-3 w-3 rounded-full bg-white shadow transition-all ${state.excl ? "right-0.5" : "left-0.5"}"></span></span>
+      Excluir estornos`;
+  };
+  est.onclick = () => { state.excl = !state.excl; syncEst(); renderAll(); };
+  syncEst();
+
+  document.getElementById("f-reset").onclick = () => {
+    state.m1 = 1; state.m2 = 6; m1.value = 1; m2.value = 6;
+    state.cats = new Set(ALLCATS); state.tit = "ALL"; state.tipo = "ALL"; state.excl = false; state.q = "";
+    document.getElementById("f-titular").value = "ALL"; document.getElementById("f-tipo").value = "ALL";
+    document.getElementById("tx-search").value = "";
+    syncCatUI(); syncEst(); renderAll();
+  };
+
+  // Tabela
+  document.getElementById("tx-search").oninput = ev => { state.q = ev.target.value; state.page = 0; renderTable(F()); };
+  document.querySelectorAll("th[data-sort]").forEach(th => th.onclick = () => {
+    const k = th.dataset.sort;
+    state.sort = { k, dir: state.sort.k === k ? -state.sort.dir : -1 };
+    renderTable(F());
+  });
+  document.getElementById("tx-prev").onclick = () => { if (state.page > 0) { state.page--; renderTable(F()); } };
+  document.getElementById("tx-next").onclick = () => { state.page++; renderTable(F()); };
+
+  // Sliders do simulador
+  ["sim-fora","sim-ecom","sim-vest"].forEach(id => document.getElementById(id).oninput = renderSim);
+}
+
+/* ============ NAVEGAÇÃO ============ */
+function setPage(id) {
+  document.querySelectorAll(".page").forEach(p => p.classList.toggle("active", p.id === id));
+  document.querySelectorAll(".nav-btn").forEach(b => {
+    const on = b.dataset.page === id;
+    b.className = "nav-btn inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-medium transition border " +
+      (on ? "bg-cyan-500 text-white border-white/20 shadow-lg shadow-cyan-900/40"
+          : "bg-neutral-800 text-neutral-300 border-white/10 hover:bg-neutral-700 hover:text-white");
+  });
+  lucide.createIcons();
+}
+document.querySelectorAll(".nav-btn").forEach(b => b.onclick = () => setPage(b.dataset.page));
+document.querySelectorAll(".goto").forEach(b => b.onclick = () => setPage(b.dataset.goto));
+
+/* ============ BOOT ============ */
+initFilters();
+setPage("p1");
+renderAll();
+</script>
+</body>
+</html>
