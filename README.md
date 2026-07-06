@@ -104,3 +104,13 @@ Dependências: `pip install pandas numpy matplotlib seaborn jupyter`
 - 📈 Versão SQL das análises
 - 🚨 Detecção de anomalias para alerta de fraude
 - ☁️ Deploy do dashboard via GitHub Pages
+
+## Partes do Dashboard
+
+<img width="2482" height="1295" alt="image" src="https://github.com/user-attachments/assets/2e170352-8c43-456f-843f-324ecbf9bcc3" />
+<img width="2482" height="1201" alt="image" src="https://github.com/user-attachments/assets/a1b0d012-2ed7-44ce-ab56-13692324cd8a" />
+<img width="2486" height="1207" alt="image" src="https://github.com/user-attachments/assets/44a8bb27-03f0-4cf9-b628-61d4d25e5e1c" />
+<img width="2477" height="1262" alt="image" src="https://github.com/user-attachments/assets/4779008e-be6b-461a-bd29-08f9c78c5389" />
+
+
+
